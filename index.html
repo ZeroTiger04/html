@@ -138,39 +138,25 @@
     opacity: 0; visibility: hidden; transition: all 0.3s ease;
     backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
   }
-  .complete-layer.show {
-    opacity: 1; visibility: visible;
-  }
+  .complete-layer.show { opacity: 1; visibility: visible; }
   
   .success-card {
     background: white; width: 88%; max-width: 340px; border-radius: 24px; 
-    text-align: center; overflow: hidden;
-    box-shadow: 0 24px 50px rgba(0,0,0,0.3);
+    text-align: center; overflow: hidden; box-shadow: 0 24px 50px rgba(0,0,0,0.3);
     transform: scale(0.8); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  .complete-layer.show .success-card {
-    transform: scale(1);
-  }
+  .complete-layer.show .success-card { transform: scale(1); }
 
-  .success-header {
-    background: linear-gradient(135deg, var(--fire-bright) 0%, var(--fire-dark) 100%);
-    padding: 40px 20px 30px; position: relative;
-  }
-  
+  .success-header { background: linear-gradient(135deg, var(--fire-bright) 0%, var(--fire-dark) 100%); padding: 40px 20px 30px; position: relative; }
   .success-icon-wrap {
-    width: 72px; height: 72px; margin: 0 auto 16px;
-    background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 0 0 10px rgba(255,255,255,0.1);
+    width: 72px; height: 72px; margin: 0 auto 16px; background: rgba(255,255,255,0.2); border-radius: 50%; 
+    display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 10px rgba(255,255,255,0.1);
   }
   .animated-check { width: 40px; height: 40px; color: white; }
-  .animated-check-path {
-    stroke-dasharray: 50; stroke-dashoffset: 50;
-  }
-  
+  .animated-check-path { stroke-dasharray: 50; stroke-dashoffset: 50; }
   @keyframes drawCheckLayer { to { stroke-dashoffset: 0; } }
 
   .success-title { font-family: 'Noto Serif KR', serif; font-size: 22px; font-weight: 800; color: white; margin: 0; letter-spacing: -0.5px; }
-
   .success-body { padding: 32px 24px; background: white; }
   .success-text { font-size: 15px; color: #555; line-height: 1.6; margin-bottom: 24px; }
   .highlight-badge {
@@ -186,30 +172,52 @@
   }
   .close-btn:active { transform: scale(0.97); }
 
-  /* --- 이미지 줌 모달 (뷰포트 고정) --- */
+  /* --- 이미지 줌 모달 --- */
   .image-zoom-modal {
     position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(0,0,0,0.95); z-index: 9999;
     display: flex; align-items: center; justify-content: center;
     opacity: 0; visibility: hidden; transition: all 0.3s ease;
   }
-  .image-zoom-modal.show {
-    opacity: 1; visibility: visible;
-  }
+  .image-zoom-modal.show { opacity: 1; visibility: visible; }
   .zoom-modal-content {
     max-width: 95%; max-height: 90%; border-radius: 8px;
     transform: scale(0.8); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  .image-zoom-modal.show .zoom-modal-content {
-    transform: scale(1);
-  }
+  .image-zoom-modal.show .zoom-modal-content { transform: scale(1); }
   .close-zoom {
     position: absolute; top: 20px; right: 24px; color: white;
     font-size: 40px; font-weight: 300; cursor: pointer; z-index: 10001;
   }
+
+  /* --- 음악 제어 플로팅 버튼 --- */
+  .bgm-toggle {
+    position: fixed; bottom: 24px; right: 24px; z-index: 9000;
+    height: 48px; border-radius: 24px; padding: 0 18px; 
+    background: white; border: 2px solid var(--fire-bright); color: var(--fire-red);
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    box-shadow: 0 6px 16px rgba(211,47,47,0.2); cursor: pointer; transition: all 0.3s ease;
+    font-family: 'Noto Sans KR', sans-serif; font-weight: 700; font-size: 14px;
+  }
+  .bgm-toggle svg { width: 20px; height: 20px; fill: currentColor; }
+  
+  /* 재생 중일 때 스타일 */
+  .bgm-toggle.playing {
+    background: var(--fire-red); color: white; border-color: var(--fire-red);
+    animation: pulse-bgm 2s infinite;
+  }
+  @keyframes pulse-bgm {
+    0% { box-shadow: 0 0 0 0 rgba(211,47,47,0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(211,47,47,0); }
+    100% { box-shadow: 0 0 0 0 rgba(211,47,47,0); }
+  }
 </style>
 </head>
 <body>
+
+<audio id="bgm" loop autoplay>
+  <source src="bgm.mp3" type="audio/mpeg">
+</audio>
 
 <div class="page">
   <div class="hero">
@@ -284,6 +292,15 @@
   </div>
 </div>
 
+<button class="bgm-toggle" id="bgmBtn" onclick="toggleMusic()">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M9 18V5l12-2v13"></path>
+    <circle cx="6" cy="18" r="3"></circle>
+    <circle cx="18" cy="16" r="3"></circle>
+  </svg>
+  <span id="bgmText">음악 켜기</span>
+</button>
+
 <div id="completeLayer" class="complete-layer" onclick="closeCompleteLayer()">
   <div class="success-card" onclick="event.stopPropagation()">
     <div class="success-header">
@@ -312,8 +329,6 @@
   const total = 4;
   const states = [false, false, false, false];
   let layerTimeout; 
-  
-  // [추가됨] 팝업을 본 적이 있는지 기억하는 변수
   let hasSeenCompleteLayer = false;
 
   function handleItemClick(i) {
@@ -331,22 +346,18 @@
     
     clearTimeout(layerTimeout);
 
-    // 4개가 모두 체크되었고, 한 번도 팝업을 보지 않았을 때만 띄움
     if (count === total && !hasSeenCompleteLayer) {
-      hasSeenCompleteLayer = true; // 이제 본 것으로 체크 (다시는 안 뜸)
+      hasSeenCompleteLayer = true; 
       layerTimeout = setTimeout(showCompleteLayer, 400); 
     } 
   }
 
-  // --- 레이어 팝업 표시/숨김 ---
+  // --- 레이어 팝업 기능 ---
   function showCompleteLayer() {
     const layer = document.getElementById('completeLayer');
     layer.classList.add('show');
-    
-    // 팝업이 뜬 동안 뒷배경 스크롤 방지
     document.body.style.overflow = 'hidden';
 
-    // 체크마크 애니메이션 실행
     const path = layer.querySelector('.animated-check-path');
     path.style.animation = 'none';
     path.offsetHeight; /* 리플로우 */
@@ -356,12 +367,10 @@
   function closeCompleteLayer() {
     const layer = document.getElementById('completeLayer');
     layer.classList.remove('show');
-    
-    // 팝업이 닫히면 배경 스크롤 허용
     document.body.style.overflow = '';
   }
 
-  // --- 이미지 줌 기능 관련 함수 ---
+  // --- 이미지 줌 기능 ---
   function openImgModal(src) {
     const modal = document.getElementById('imgZoomModal');
     const zoomedImg = document.getElementById('zoomedImg');
@@ -375,11 +384,74 @@
     const modal = document.getElementById('imgZoomModal');
     modal.classList.remove('show');
     
-    // 닫을 때 뒷배경 스크롤 잠금 해제 (완료 레이어가 켜져있지 않을 때만)
     if (!document.getElementById('completeLayer').classList.contains('show')) {
       document.body.style.overflow = '';
     }
   }
+
+  // --- 자동 재생 및 음악 제어 스크립트 ---
+  let isPlaying = false;
+  const bgm = document.getElementById('bgm');
+  const bgmBtn = document.getElementById('bgmBtn');
+  const bgmText = document.getElementById('bgmText');
+
+  // 버튼 UI 상태 변경 함수
+  function setMusicPlayingState(playing) {
+    if (playing) {
+      bgmBtn.classList.add('playing');
+      bgmText.textContent = '음악 끄기';
+      isPlaying = true;
+    } else {
+      bgmBtn.classList.remove('playing');
+      bgmText.textContent = '음악 켜기';
+      isPlaying = false;
+    }
+  }
+
+  // 음악 버튼 클릭 시 실행
+  function toggleMusic() {
+    if (isPlaying) {
+      bgm.pause();
+      setMusicPlayingState(false);
+    } else {
+      bgm.play().then(() => {
+        setMusicPlayingState(true);
+      }).catch((e) => {
+        console.log("재생 실패:", e);
+        alert("브라우저 정책으로 인해 소리를 재생할 수 없습니다.");
+      });
+    }
+  }
+
+  // 페이지 로드 완료 시 자동 재생 시도 및 첫 터치  fallback
+  window.addEventListener('DOMContentLoaded', () => {
+    const playPromise = bgm.play();
+    
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        // 브라우저가 자동 재생을 허용한 경우
+        setMusicPlayingState(true);
+      }).catch(error => {
+        // 모바일 환경 등에서 자동 재생이 차단된 경우
+        console.log("자동 재생이 차단되었습니다. 사용자의 첫 터치 시 재생합니다.");
+        
+        const startMusicOnInteract = () => {
+          if (!isPlaying) {
+            bgm.play().then(() => {
+              setMusicPlayingState(true);
+            }).catch(e => console.log(e));
+          }
+          // 재생 후 이벤트 리스너 제거
+          document.removeEventListener('click', startMusicOnInteract);
+          document.removeEventListener('touchstart', startMusicOnInteract);
+        };
+
+        // 화면을 아무 곳이나 터치하면 음악 시작
+        document.addEventListener('click', startMusicOnInteract);
+        document.addEventListener('touchstart', startMusicOnInteract, {passive: true});
+      });
+    }
+  });
 </script>
 </body>
 </html>
