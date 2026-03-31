@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>우리집 안전점검 초대장 — 남원소방서</title>
+<title>공동주택 세대점검 초대장 — 남원소방서</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -16,201 +16,266 @@
     --border: rgba(139,32,32,0.12);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--cream-dark); font-family: 'Noto Sans KR', sans-serif; color: var(--text-dark); min-height: 100vh; overflow-x: hidden; }
-  .page { max-width: 480px; margin: 0 auto; position: relative; }
+  
+  /* 사이트 진입 효과 설정 */
+  body { 
+    background: var(--cream-dark); font-family: 'Noto Sans KR', sans-serif; 
+    color: var(--text-dark); min-height: 100vh; overflow-x: hidden; 
+    opacity: 0; animation: pageFadeIn 0.8s ease-out forwards; 
+  }
+  @keyframes pageFadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+  
+  .page { max-width: 480px; margin: 0 auto; position: relative; background: var(--cream-dark); box-shadow: 0 0 30px rgba(0,0,0,0.05); }
 
+  /* --- 상단 헤더 디자인 --- */
   .hero { 
-    background: linear-gradient(135deg, var(--fire-dark) 0%, var(--fire-red) 50%, var(--fire-dark) 100%);
-    padding: 60px 32px 50px; 
-    text-align: center; 
-    position: relative; 
-    overflow: hidden;
-    box-shadow: inset 0 -10px 20px rgba(0,0,0,0.2);
+    background: linear-gradient(135deg, var(--fire-dark) 0%, var(--fire-red) 50%, #B71C1C 100%);
+    padding: 70px 32px 80px; text-align: center; position: relative; overflow: hidden;
+  }
+  
+  /* 떠다니는 불티 애니메이션 */
+  .spark { position: absolute; background: rgba(255, 255, 255, 0.4); border-radius: 50%; animation: floatUp linear infinite; pointer-events: none; }
+  .spark:nth-child(1) { width: 4px; height: 4px; left: 10%; bottom: -10px; animation-duration: 4s; animation-delay: 0s; }
+  .spark:nth-child(2) { width: 6px; height: 6px; left: 30%; bottom: -10px; animation-duration: 5s; animation-delay: 1s; }
+  .spark:nth-child(3) { width: 3px; height: 3px; left: 50%; bottom: -10px; animation-duration: 3.5s; animation-delay: 2s; }
+  .spark:nth-child(4) { width: 5px; height: 5px; left: 70%; bottom: -10px; animation-duration: 4.5s; animation-delay: 0.5s; }
+  .spark:nth-child(5) { width: 7px; height: 7px; left: 85%; bottom: -10px; animation-duration: 6s; animation-delay: 1.5s; }
+  @keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-150px) scale(0); opacity: 0; }
   }
 
-  .hero::before { 
-    content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; 
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-    animation: siren 3s infinite linear;
-  }
-  @keyframes siren {
-    0% { left: -100%; }
-    100% { left: 100%; }
-  }
-
+  /* 남원소방서 뱃지 */
   .hero-badge { 
-    display:inline-flex; align-items:center; 
-    background: rgba(0,0,0,0.2); 
-    border: 1px solid rgba(255,255,255,0.3); 
-    color: #FFFFFF; 
-    font-size: 12px; font-weight: 600; letter-spacing: 2px; 
-    padding: 6px 20px; border-radius: 4px; 
-    margin-bottom: 24px; 
-    animation: fadeDown 0.6s ease both;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-  }
-
-  .fire-mark {
-    width: 80px; height: 80px; margin: 0 auto 20px;
-    background: white; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    border: 3px solid var(--fire-bright);
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0% { transform: scale(1); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-    50% { transform: scale(1.05); box-shadow: 0 4px 25px rgba(255,82,82,0.5); }
-    100% { transform: scale(1); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-  }
-
-  .hero-title { 
-    font-family: 'Noto Serif KR', serif; font-size: 32px; font-weight: 900; 
-    color: #FFFFFF; line-height: 1.3; 
-    animation: fadeDown 0.6s 0.2s ease both;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
-  }
-  .hero-sub { 
-    font-size: 14px; color: rgba(255,255,255,0.9); font-weight: 400; 
-    margin-top: 12px; animation: fadeDown 0.6s 0.3s ease both;
-    letter-spacing: -0.5px;
+    display:inline-flex; align-items:center; justify-content:center;
+    background: rgba(255, 255, 255, 0.15); 
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    color: #FFFFFF; font-size: 15px; font-weight: 700; 
+    letter-spacing: 2px; padding: 10px 24px; border-radius: 50px; margin-bottom: 28px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15); position: relative; z-index: 2;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
   }
   
-  .hero-bottom {
-    height: 15px; background: var(--fire-dark);
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 0);
-  }
+  .hero-title { font-family: 'Noto Serif KR', serif; font-size: 34px; font-weight: 900; color: #FFFFFF; line-height: 1.35; text-shadow: 0 4px 10px rgba(0,0,0,0.3); position: relative; z-index: 2; }
+  .hero-sub { font-size: 15px; color: rgba(255,255,255,0.9); margin-top: 14px; position: relative; z-index: 2; font-weight: 400; letter-spacing: -0.5px; }
+  
+  /* 물결 바닥 효과 */
+  .hero-wave { position: absolute; bottom: -1px; left: 0; width: 100%; overflow: hidden; line-height: 0; z-index: 1; }
+  .hero-wave svg { display: block; width: calc(100% + 1.3px); height: 40px; }
 
-  .section { padding:32px 20px; background:var(--cream-light); border-bottom:1px solid var(--border); animation:fadeUp 0.5s 0.5s ease both; }
+  /* 섹션 스타일 */
+  .section { padding: 40px 20px 50px; background:var(--cream-light); }
   .section-header { display:flex; align-items:center; gap:10px; margin-bottom:20px; }
-  .section-line { width:4px; height:18px; background:var(--fire-red); border-radius:2px; flex-shrink:0; }
+  .section-line { width:4px; height:18px; background:var(--fire-red); border-radius:2px; }
   .section-title { font-family:'Noto Serif KR',serif; font-size:18px; font-weight:700; color:var(--text-dark); }
-  .progress-wrap { background:white; border-radius:14px; padding:16px 20px; margin-bottom:20px; border:1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
-  .progress-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
-  .progress-label { font-size:12px; font-weight:600; color:var(--fire-red); }
-  .progress-count { font-family:'Noto Serif KR',serif; font-size:16px; font-weight:700; color:var(--fire-red); }
-  .progress-track { height:6px; background:rgba(211,47,47,0.1); border-radius:10px; overflow:hidden; }
-  .progress-fill { height:100%; background:var(--fire-red); border-radius:10px; width:0%; transition:width 0.4s cubic-bezier(0.4,0,0.2,1); }
   
-  .check-block { margin-bottom:14px; border-radius:18px; border:1px solid var(--border); overflow:hidden; background:white; transition: all 0.3s ease; }
-  .check-block.done { border-color:var(--fire-red); background:#FFF8F8; }
-  .check-item { display:flex; align-items:center; gap:16px; padding:16px 20px; cursor:pointer; -webkit-tap-highlight-color:transparent; user-select:none; }
+  /* 진행도 바 */
+  .progress-wrap { background:white; border-radius:14px; padding:18px 20px; margin-bottom:24px; border:1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+  .progress-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+  .progress-label { font-size:13px; font-weight:700; color:var(--fire-red); }
+  .progress-count { font-family:'Noto Serif KR',serif; font-size:16px; font-weight:800; color:var(--fire-red); }
+  .progress-track { height:8px; background:rgba(211,47,47,0.1); border-radius:10px; overflow:hidden; }
+  .progress-fill { height:100%; background: linear-gradient(90deg, var(--fire-dark), var(--fire-bright)); border-radius:10px; width:0%; transition:width 0.6s cubic-bezier(0.4,0,0.2,1); }
+  
+  /* 체크 리스트 */
+  .check-block { 
+    margin-bottom:14px; border-radius:18px; border:1px solid var(--border); overflow:hidden; 
+    background:white; transition: all 0.3s ease; cursor:pointer;
+    opacity: 0; transform: translateY(20px); animation: slideUpFade 0.6s ease-out forwards;
+  }
+  .check-block:nth-child(3) { animation-delay: 0.1s; }
+  .check-block:nth-child(4) { animation-delay: 0.2s; }
+  .check-block:nth-child(5) { animation-delay: 0.3s; }
+  .check-block:nth-child(6) { animation-delay: 0.4s; }
+  
+  @keyframes slideUpFade { to { opacity: 1; transform: translateY(0); } }
+
+  .check-block:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.06); }
+  .check-block.done { border-color:var(--fire-red); box-shadow: 0 4px 12px rgba(211,47,47,0.08); background: #FFFAFA; }
+  .check-item { display:flex; align-items:center; gap:16px; padding:18px 20px; -webkit-tap-highlight-color:transparent; }
   .item-icon { width:48px; height:48px; border-radius:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
   .item-text { flex:1; }
   .item-main { font-size:16px; font-weight:700; color:var(--text-dark); display:block; margin-bottom:4px; }
-  .item-sub { font-size:12px; color:#666; font-weight:400; display:block; }
-  .item-right { display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
-  .item-check { width:26px; height:26px; border-radius:50%; border:2px solid #D0C8C0; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.3s ease; }
+  .item-sub { font-size:12px; color:#777; display:block; line-height: 1.4; }
+  .item-check { width:26px; height:26px; border-radius:50%; border:2px solid #D0C8C0; display:flex; align-items:center; justify-content:center; flex-shrink:0; background: white; transition:all 0.3s ease; }
   .check-block.done .item-check { background:var(--fire-red); border-color:var(--fire-red); }
   .check-block.done .item-check svg { opacity:1; transform:scale(1); }
-  .item-check svg { opacity:0; transform:scale(0.5); transition:all 0.3s cubic-bezier(0.4,0,0.2,1); }
-  .guide-toggle { font-size:11px; color:var(--fire-red); font-weight:600; background:rgba(211,47,47,0.06); border-radius:4px; padding:5px 12px; white-space:nowrap; border:none; cursor:pointer; }
-  .guide-panel { max-height:0; overflow:hidden; transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1); }
-  .guide-panel.open { max-height:2000px; border-top:1px solid rgba(211,47,47,0.1); }
-  .guide-inner { padding:20px 20px; background:#FAFAF8; }
-  .illust-wrap { border-radius:12px; overflow:hidden; margin-bottom:10px; }
-  .illust-wrap img { width: 100%; height: auto; border-radius: 12px; display: block; cursor: zoom-in; }
-  .illust-wrap.vertical { display: flex; flex-direction: column; gap: 12px; }
-  
-  .footer { background:#222; padding:40px 24px; text-align:center; color:white; }
-  .footer-logo { font-family:'Noto Serif KR',serif; font-size:22px; font-weight:700; color:var(--fire-bright); margin-bottom:6px; }
-  .footer-sub { font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:20px; }
-  
-  .complete-toast { 
-    position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(100px); 
-    background:var(--fire-dark); color:white; padding:16px 28px; border-radius:40px; 
-    font-size:15px; font-weight:600; z-index:999; 
-    transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1); opacity:0;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-    white-space: nowrap;
-  }
-  .complete-toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
-  
-  .image-modal { visibility: hidden; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; opacity: 0; transition: all 0.3s; }
-  .image-modal.show { visibility: visible; opacity: 1; }
-  .image-modal-content { max-width: 95%; max-height: 85%; border-radius: 4px; transform: scale(0.9); transition: 0.3s; }
-  .image-modal.show .image-modal-content { transform: scale(1); }
-  .modal-close { position: absolute; top: 20px; right: 24px; color: white; font-size: 35px; cursor: pointer; }
+  .item-check svg { opacity:0; transform:scale(0.5); transition:0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
 
-  @keyframes fadeDown { from{opacity:0;transform:translateY(-16px)} to{opacity:1;transform:translateY(0)} }
-  @keyframes fadeUp   { from{opacity:0;transform:translateY(16px)}  to{opacity:1;transform:translateY(0)} }
+  /* 사진 가이드 */
+  .guide-panel { max-height:0; overflow:hidden; transition:max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1); background:#FAFAF8; }
+  .guide-panel.open { max-height:1000px; border-top:1px solid rgba(211,47,47,0.1); }
+  .guide-inner { padding:20px; }
+  /* 이미지 줌을 위한 커서 추가 */
+  .illust-wrap img { width: 100%; height: auto; border-radius:12px; display: block; box-shadow: 0 4px 12px rgba(0,0,0,0.1); cursor: zoom-in; }
+  
+  /* --- [수정] 인라인 완료 축하 카드 (팝업 대체) --- */
+  .inline-success {
+    max-height: 0; opacity: 0; overflow: hidden;
+    transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    margin-top: 0;
+  }
+  .inline-success.show {
+    max-height: 500px; opacity: 1; margin-top: 32px;
+  }
+  
+  .success-card {
+    background: white; border-radius: 24px; text-align: center; overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08); border: 1px solid var(--border);
+  }
+
+  .success-header {
+    background: linear-gradient(135deg, var(--fire-bright) 0%, var(--fire-dark) 100%);
+    padding: 40px 20px 30px; position: relative;
+  }
+  
+  .success-icon-wrap {
+    width: 72px; height: 72px; margin: 0 auto 16px;
+    background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 0 10px rgba(255,255,255,0.1);
+  }
+  .animated-check { width: 40px; height: 40px; color: white; }
+  .animated-check-path {
+    stroke-dasharray: 50; stroke-dashoffset: 50;
+  }
+  /* 클래스가 추가되면 애니메이션 실행 */
+  .inline-success.show .animated-check-path {
+    animation: drawCheck 0.6s cubic-bezier(0.65, 0, 0.45, 1) 0.3s forwards;
+  }
+  @keyframes drawCheck { to { stroke-dashoffset: 0; } }
+
+  .success-title { font-family: 'Noto Serif KR', serif; font-size: 22px; font-weight: 800; color: white; margin: 0; letter-spacing: -0.5px; }
+
+  .success-body { padding: 32px 24px; background: white; }
+  .success-text { font-size: 15px; color: #555; line-height: 1.6; margin: 0; }
+  .highlight-badge {
+    display: inline-block; background: #FFF0EB; color: var(--fire-dark);
+    font-size: 13px; font-weight: 700; padding: 4px 12px; border-radius: 20px;
+    margin-top: 12px; border: 1px solid rgba(211,47,47,0.2);
+  }
+
+  /* --- 하단 푸터 디자인 --- */
+  .footer { 
+    background: linear-gradient(180deg, #2A1A10 0%, #150C07 100%); 
+    padding: 50px 24px 60px; text-align: center; color: white;
+    border-top: 4px solid var(--fire-dark); position: relative; overflow: hidden;
+  }
+  .footer::before {
+    content: ''; position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
+    width: 200px; height: 200px; background: radial-gradient(circle, rgba(211,47,47,0.1) 0%, transparent 70%); pointer-events: none;
+  }
+  .footer-logo { font-family:'Noto Serif KR',serif; font-size:24px; font-weight:800; color:var(--fire-bright); margin-bottom:8px; letter-spacing: 1px; }
+  .footer-eng { font-size: 11px; color: rgba(255,255,255,0.4); margin-bottom: 24px; letter-spacing: 2px; text-transform: uppercase; }
+  .footer-note { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.7; font-weight: 300; }
+
+  /* --- [추가] 이미지 확대 모달 --- */
+  .image-zoom-modal {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.9); z-index: 10000;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden; transition: all 0.3s ease;
+  }
+  .image-zoom-modal.show {
+    opacity: 1; visibility: visible;
+  }
+  .zoom-modal-content {
+    max-width: 95%; max-height: 90%; border-radius: 8px;
+    transform: scale(0.8); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .image-zoom-modal.show .zoom-modal-content {
+    transform: scale(1);
+  }
+  .close-zoom {
+    position: absolute; top: 20px; right: 24px; color: white;
+    font-size: 40px; font-weight: 300; cursor: pointer;
+  }
 </style>
 </head>
 <body>
-<div class="page">
 
+<div class="page">
   <div class="hero">
-    <div class="hero-badge">남원소방서</div>
-    <div class="fire-mark">
-      <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 2L15 8H9L12 2Z" fill="#D32F2F"/>
-        <path d="M12 22C16.4183 22 20 18.4183 20 14C20 9.58172 12 2 12 2C12 2 4 9.58172 4 14C4 18.4183 7.58172 22 12 22Z" fill="#D32F2F"/>
-        <circle cx="12" cy="14" r="3" fill="white"/>
+    <div class="spark"></div><div class="spark"></div><div class="spark"></div><div class="spark"></div><div class="spark"></div>
+    
+    <div class="hero-badge">
+      남원소방서
+    </div>
+    <h1 class="hero-title">공동주택 세대점검<br>초대장</h1>
+    <p class="hero-sub">소중한 가족의 안전, 우리가 함께 만듭니다</p>
+    
+    <div class="hero-wave">
+      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,119.5,187.5,103.5,232.07,90.96,278.48,68.64,321.39,56.44Z" fill="#FDFAF6"></path>
       </svg>
     </div>
-    <h1 class="hero-title">우리집 안전점검<br>초대장</h1>
-    <p class="hero-sub">소중한 가족의 안전, 우리가 함께 만듭니다</p>
   </div>
-  <div class="hero-bottom"></div>
 
   <div class="section">
-    <div class="section-header"><div class="section-line"></div><h2 class="section-title">점검 방법</h2></div>
+    <div class="section-header"><div class="section-line"></div><h2 class="section-title">점검 방법 학습</h2></div>
+    
     <div class="progress-wrap">
-      <div class="progress-top"><span class="progress-label">안전 확인 진행도</span><span class="progress-count" id="prog-count">0 / 4</span></div>
+      <div class="progress-top"><span class="progress-label">안전 학습 진행도</span><span class="progress-count" id="prog-count">0 / 4</span></div>
       <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
     </div>
 
-    <div class="check-block" id="block-0">
-      <div class="check-item" onclick="toggleCheck(0)">
-        <div class="item-icon" style="background:#FFF0EB;"><svg width="24" height="24" viewBox="0 0 26 26" fill="none"><rect x="7" y="4" width="10" height="14" rx="2" fill="#D32F2F"/><rect x="9" y="2" width="6" height="3" rx="1" fill="#9A1B1B"/><circle cx="12" cy="9.5" r="2.5" fill="#FFF"/><circle cx="12" cy="9.5" r="1.2" fill="#D32F2F"/></svg></div>
+    <div class="check-block" id="block-0" onclick="handleItemClick(0)">
+      <div class="check-item">
+        <div class="item-icon" style="background:#FFF0EB;"><svg width="24" height="24" viewBox="0 0 26 26" fill="none"><rect x="7" y="4" width="10" height="14" rx="2" fill="#D32F2F"/><rect x="9" y="2" width="6" height="3" rx="1" fill="#9A1B1B"/><circle cx="12" cy="9.5" r="2.5" fill="#FFF"/></svg></div>
         <div class="item-text"><span class="item-main">소화설비</span><span class="item-sub">소화기 및 자동확산소화기 점검</span></div>
-        <div class="item-right">
-          <div class="item-check"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.5L5 9L9.5 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <button class="guide-toggle" onclick="event.stopPropagation();toggleGuide(0)">사진보기 ▾</button>
-        </div>
+        <div class="item-check"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.5L5 9L9.5 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       </div>
-      <div class="guide-panel" id="guide-0"><div class="guide-inner"><div class="illust-wrap"><img src="1.jpg" alt="소화설비" onclick="openModal(this.src)"></div></div></div>
+      <div class="guide-panel" id="guide-0"><div class="guide-inner"><div class="illust-wrap"><img src="1.jpg" alt="소화설비" onclick="event.stopPropagation(); openImgModal(this.src)"></div></div></div>
     </div>
 
-    <div class="check-block" id="block-1">
-      <div class="check-item" onclick="toggleCheck(1)">
-        <div class="item-icon" style="background:#EBF3FA;"><svg width="24" height="24" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="10" r="6" fill="#185FA5" opacity="0.2"/><circle cx="13" cy="10" r="4" fill="#185FA5"/><circle cx="13" cy="10" r="1.8" fill="white"/></svg></div>
-        <div class="item-text"><span class="item-main">경보설비</span><span class="item-sub">자동화재탐지설비 및 가스누설경보기 점검</span></div>
-        <div class="item-right">
-          <div class="item-check"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.5L5 9L9.5 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <button class="guide-toggle" onclick="event.stopPropagation();toggleGuide(1)">사진보기 ▾</button>
-        </div>
+    <div class="check-block" id="block-1" onclick="handleItemClick(1)">
+      <div class="check-item">
+        <div class="item-icon" style="background:#EBF3FA;"><svg width="24" height="24" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="10" r="6" fill="#185FA5"/><circle cx="13" cy="10" r="1.8" fill="white"/></svg></div>
+        <div class="item-text"><span class="item-main">경보설비</span><span class="item-sub">자동화재탐지설비 및 가스누설경보기</span></div>
+        <div class="item-check"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.5L5 9L9.5 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       </div>
-      <div class="guide-panel" id="guide-1"><div class="guide-inner"><div class="illust-wrap"><img src="2.jpg" alt="경보설비" onclick="openModal(this.src)"></div></div></div>
+      <div class="guide-panel" id="guide-1"><div class="guide-inner"><div class="illust-wrap"><img src="2.jpg" alt="경보설비" onclick="event.stopPropagation(); openImgModal(this.src)"></div></div></div>
     </div>
 
-    <div class="check-block" id="block-2">
-      <div class="check-item" onclick="toggleCheck(2)">
+    <div class="check-block" id="block-2" onclick="handleItemClick(2)">
+      <div class="check-item">
         <div class="item-icon" style="background:#FAF1E1;"><svg width="24" height="24" viewBox="0 0 26 26" fill="none"><rect x="2" y="7" width="22" height="15" rx="2.5" fill="#BA7517" opacity="0.2"/><path d="M7 14.5L10.5 18L19 11" stroke="#854F0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="item-text"><span class="item-main">피난설비</span><span class="item-sub">완강기 및 피난구용내림식사다리 점검</span></div>
-        <div class="item-right">
-          <div class="item-check"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.5L5 9L9.5 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <button class="guide-toggle" onclick="event.stopPropagation();toggleGuide(2)">사진보기 ▾</button>
-        </div>
+        <div class="item-text"><span class="item-main">피난설비</span><span class="item-sub">완강기 및 피난구용 내림식 사다리</span></div>
+        <div class="item-check"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.5L5 9L9.5 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       </div>
-      <div class="guide-panel" id="guide-2"><div class="guide-inner"><div class="illust-wrap"><img src="3.jpg" alt="피난설비" onclick="openModal(this.src)"></div></div></div>
+      <div class="guide-panel" id="guide-2"><div class="guide-inner"><div class="illust-wrap"><img src="3.jpg" alt="피난설비" onclick="event.stopPropagation(); openImgModal(this.src)"></div></div></div>
     </div>
 
-    <div class="check-block" id="block-3">
-      <div class="check-item" onclick="toggleCheck(3)">
+    <div class="check-block" id="block-3" onclick="handleItemClick(3)">
+      <div class="check-item">
         <div class="item-icon" style="background:#F0F6E8;"><svg width="24" height="24" viewBox="0 0 26 26" fill="none"><rect x="3" y="13" width="20" height="11" rx="2" fill="#3B6D11"/><path d="M7 13L7 10Q13 4 19 10L19 13" fill="none" stroke="#639922" stroke-width="1.8"/></svg></div>
-        <div class="item-text"><span class="item-main">기타설비</span><span class="item-sub">대피공간, 경량칸막이 및 소화장치 점검</span></div>
-        <div class="item-right">
-          <div class="item-check"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.5L5 9L9.5 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <button class="guide-toggle" onclick="event.stopPropagation();toggleGuide(3)">사진보기 ▾</button>
-        </div>
+        <div class="item-text"><span class="item-main">기타설비</span><span class="item-sub">대피공간, 경량칸막이 및 소화장치</span></div>
+        <div class="item-check"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.5L5 9L9.5 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       </div>
       <div class="guide-panel" id="guide-3">
         <div class="guide-inner">
-          <div class="illust-wrap vertical">
-            <img src="4-1.jpg" alt="기타설비 1" onclick="openModal(this.src)">
-            <img src="4-2.jpg" alt="기타설비 2" onclick="openModal(this.src)">
+          <div class="illust-wrap">
+            <img src="4-1.jpg" alt="기타설비 1" style="margin-bottom:12px;" onclick="event.stopPropagation(); openImgModal(this.src)">
+            <img src="4-2.jpg" alt="기타설비 2" onclick="event.stopPropagation(); openImgModal(this.src)">
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="inlineSuccess" class="inline-success">
+      <div class="success-card">
+        <div class="success-header">
+          <div class="success-icon-wrap">
+            <svg class="animated-check" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path class="animated-check-path" d="M5 13L9 17L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h2 class="success-title">점검 방법 학습 완료</h2>
+        </div>
+        <div class="success-body">
+          <p class="success-text">우리 가족의 안전을 지키는<br>소중한 첫걸음을 마치셨습니다.<br>
+            <span class="highlight-badge">🚨 오늘 꼭 직접 확인해보세요!</span>
+          </p>
         </div>
       </div>
     </div>
@@ -218,47 +283,63 @@
 
   <div class="footer">
     <div class="footer-logo">남원소방서</div>
-    <div class="footer-sub">Namwon Fire Station</div>
-    <p class="footer-note">주택 화재 예방 및 자율 안전관리 문화 정착을 위해<br>세대점검에 적극 참여해 주시기 바랍니다.</p>
+    <div class="footer-eng">Namwon Fire Station</div>
+    <p class="footer-note">공동주택 세대점검 문화 정착을 위해<br>시민 여러분의 적극적인 참여를 부탁드립니다.</p>
   </div>
 </div>
 
-<div id="imgModal" class="image-modal" onclick="closeModal()">
-  <span class="modal-close">&times;</span>
-  <img class="image-modal-content" id="expandedImg" onclick="event.stopPropagation();">
+<div id="imgZoomModal" class="image-zoom-modal" onclick="closeImgModal()">
+  <span class="close-zoom">&times;</span>
+  <img class="zoom-modal-content" id="zoomedImg" onclick="event.stopPropagation();">
 </div>
 
-<div class="complete-toast" id="toast">🚨 모든 확인이 끝났습니다! 오늘부터 더 안심하세요</div>
-
 <script>
-  const total=4, done=[false,false,false,false], guides=[false,false,false,false];
-  function toggleCheck(i){
-    done[i]=!done[i];
-    document.getElementById('block-'+i).classList.toggle('done',done[i]);
-    const c=done.filter(Boolean).length;
-    document.getElementById('prog-fill').style.width=(c/total*100)+'%';
-    document.getElementById('prog-count').textContent=c+' / '+total;
-    if(c===total){
-      const t=document.getElementById('toast');
-      t.classList.add('show');
-      setTimeout(()=>t.classList.remove('show'),4500);
+  const total = 4;
+  const states = [false, false, false, false];
+
+  function handleItemClick(i) {
+    states[i] = !states[i];
+    document.getElementById('block-' + i).classList.toggle('done', states[i]);
+    document.getElementById('guide-' + i).classList.toggle('open', states[i]);
+    
+    const count = states.filter(Boolean).length;
+    updateProgress(count);
+  }
+
+  function updateProgress(count) {
+    document.getElementById('prog-fill').style.width = (count / total * 100) + '%';
+    document.getElementById('prog-count').textContent = count + ' / ' + total;
+    
+    if (count === total) {
+      setTimeout(showInlineSuccess, 400); // 모두 체크 시 약간의 딜레이 후 실행
     }
   }
-  function toggleGuide(i){
-    guides[i]=!guides[i];
-    const p=document.getElementById('guide-'+i);
-    const b=p.previousElementSibling.querySelector('.guide-toggle');
-    p.classList.toggle('open',guides[i]);
-    b.textContent=guides[i]?'사진닫기 ▴':'사진보기 ▾';
+
+  function showInlineSuccess() {
+    const successBlock = document.getElementById('inlineSuccess');
+    
+    // 축하 카드 나타나기
+    successBlock.classList.add('show');
+    
+    // 카드가 스르륵 열리는 시간을 약간 기다렸다가 그 위치로 자동 스크롤
+    setTimeout(() => {
+      const offsetTop = successBlock.getBoundingClientRect().top + window.pageYOffset - 40; // 약간의 여백을 두고 스크롤
+      window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+    }, 150);
   }
-  function openModal(src) {
-    const modal = document.getElementById('imgModal');
-    const img = document.getElementById('expandedImg');
-    img.src = src;
+
+  // --- 이미지 줌 기능 관련 함수 ---
+  function openImgModal(src) {
+    const modal = document.getElementById('imgZoomModal');
+    const zoomedImg = document.getElementById('zoomedImg');
+    
+    zoomedImg.src = src;
     modal.classList.add('show');
   }
-  function closeModal() {
-    document.getElementById('imgModal').classList.remove('show');
+
+  function closeImgModal() {
+    const modal = document.getElementById('imgZoomModal');
+    modal.classList.remove('show');
   }
 </script>
 </body>
