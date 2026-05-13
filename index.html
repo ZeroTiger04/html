@@ -239,7 +239,9 @@
     font-size: 11px; font-weight: 500; padding: 6px 12px; border-radius: 20px; 
     backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); pointer-events: none; 
     animation: swipePulse 2.5s infinite;
+    transition: opacity 0.5s ease;
   }
+  .swipe-hint.hidden { opacity: 0 !important; animation: none; }
   @keyframes swipePulse {
     0%, 100% { opacity: 0.8; }
     50% { opacity: 1; }
@@ -322,6 +324,38 @@
     display: flex; align-items: center; justify-content: center; gap: 5px;
   }
   .check-done-text.visible { opacity: 1; transform: translateY(0); }
+
+  /* --- 공유 버튼 영역 --- */
+  .share-section {
+    margin: 0 20px 40px; text-align: center;
+  }
+  .share-title {
+    font-family: 'Noto Serif KR', serif; font-size: 15px; color: var(--text-gray);
+    margin-bottom: 16px; font-weight: 500; letter-spacing: 0.3px;
+  }
+  .share-btns {
+    display: flex; gap: 12px; justify-content: center;
+  }
+  .share-btn {
+    flex: 1; max-width: 180px; padding: 15px 10px; border-radius: 16px;
+    border: none; cursor: pointer; font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px; font-weight: 600; display: flex; align-items: center;
+    justify-content: center; gap: 8px; transition: all 0.25s ease;
+  }
+  .share-btn:active { transform: scale(0.96); }
+  .share-btn-kakao {
+    background: #FEE500; color: #3A1D1D;
+    box-shadow: 0 6px 18px rgba(254, 229, 0, 0.35);
+  }
+  .share-btn-kakao:hover { background: #FFD700; box-shadow: 0 8px 22px rgba(254, 229, 0, 0.45); }
+  .share-btn-copy {
+    background: var(--paper-card); color: var(--text-dark);
+    border: 1.5px solid var(--border-color);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+  }
+  .share-btn-copy:hover { background: #FAF8F5; box-shadow: 0 8px 22px rgba(0,0,0,0.08); }
+  .share-btn-copy.copied { background: var(--check-green); color: white; border-color: var(--check-green); box-shadow: 0 6px 18px rgba(26,122,74,0.3); }
+  .share-icon { font-size: 18px; }
 
   /* --- 하단 푸터 --- */
   .footer { padding: 40px 24px 60px; text-align: center; }
@@ -448,9 +482,9 @@
       <div class="card-checked-overlay"></div>
 
       <div class="slider-wrap">
-        <div class="swipe-hint">화살표를 눌러 넘겨보세요</div>
+        <div class="swipe-hint">← 좌우로 넘겨보세요 →</div>
         <button class="nav-btn prev-btn" onclick="moveSlide(this, -1)">❮</button>
-        <div class="slider" onscroll="updateDots(this)">
+        <div class="slider" onscroll="updateDots(this); hideHint(this)">
           <div class="slide" onclick="openImgModal('1-1.jpg')"><img src="1-1.jpg" alt="소화설비 1"></div>
           <div class="slide" onclick="openImgModal('1-2.jpg')"><img src="1-2.jpg" alt="소화설비 2"></div>
           <div class="slide" onclick="openImgModal('1-3.jpg')"><img src="1-3.jpg" alt="소화설비 3"></div>
@@ -488,9 +522,9 @@
       </div>
       <div class="card-checked-overlay"></div>
       <div class="slider-wrap">
-        <div class="swipe-hint">화살표를 눌러 넘겨보세요</div>
+        <div class="swipe-hint">← 좌우로 넘겨보세요 →</div>
         <button class="nav-btn prev-btn" onclick="moveSlide(this, -1)">❮</button>
-        <div class="slider" onscroll="updateDots(this)">
+        <div class="slider" onscroll="updateDots(this); hideHint(this)">
           <div class="slide" onclick="openImgModal('2-1.jpg')"><img src="2-1.jpg" alt="경보설비 1"></div>
           <div class="slide" onclick="openImgModal('2-2.jpg')"><img src="2-2.jpg" alt="경보설비 2"></div>
           <div class="slide" onclick="openImgModal('2-3.jpg')"><img src="2-3.jpg" alt="경보설비 3"></div>
@@ -549,9 +583,9 @@
       </div>
       <div class="card-checked-overlay"></div>
       <div class="slider-wrap">
-        <div class="swipe-hint">화살표를 눌러 넘겨보세요</div>
+        <div class="swipe-hint">← 좌우로 넘겨보세요 →</div>
         <button class="nav-btn prev-btn" onclick="moveSlide(this, -1)">❮</button>
-        <div class="slider" onscroll="updateDots(this)">
+        <div class="slider" onscroll="updateDots(this); hideHint(this)">
           <div class="slide" onclick="openImgModal('4-1.jpg')"><img src="4-1.jpg" alt="기타설비 1"></div>
           <div class="slide" onclick="openImgModal('4-2.jpg')"><img src="4-2.jpg" alt="기타설비 2"></div>
         </div>
@@ -575,6 +609,19 @@
       </div>
     </div>
 
+  </div>
+
+  <!-- 공유 버튼 -->
+  <div class="share-section fade-up">
+    <p class="share-title">이웃에게도 알려주세요 🏠</p>
+    <div class="share-btns">
+      <button class="share-btn share-btn-kakao" onclick="shareKakao()">
+        <span class="share-icon">💬</span> 카카오톡 공유
+      </button>
+      <button class="share-btn share-btn-copy" id="copyBtn" onclick="copyLink()">
+        <span class="share-icon">🔗</span> 링크 복사
+      </button>
+    </div>
   </div>
 
   <!-- 푸터 -->
@@ -632,11 +679,21 @@
     const wrap = btn.closest('.slider-wrap');
     const slider = wrap.querySelector('.slider');
     slider.scrollBy({ left: direction * slider.clientWidth, behavior: 'smooth' });
+    // 화살표 버튼으로 넘길 때도 힌트 숨김
+    const hint = wrap.querySelector('.swipe-hint');
+    if (hint) hint.classList.add('hidden');
   }
   function updateDots(slider) {
     const index = Math.round(slider.scrollLeft / slider.clientWidth);
     const dots = slider.parentElement.querySelector('.slider-dots').querySelectorAll('.dot');
     dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+  }
+  // 슬라이드 처음 넘기면 힌트 숨김
+  function hideHint(slider) {
+    if (slider.scrollLeft > 10) {
+      const hint = slider.parentElement.querySelector('.swipe-hint');
+      if (hint) hint.classList.add('hidden');
+    }
   }
 
   // ★ 체크리스트 상태 관리 (개선)
@@ -716,6 +773,52 @@
     if (!document.getElementById('completeModal').classList.contains('show')) {
       document.body.style.overflow = '';
     }
+  }
+
+  // 공유 기능
+  function shareKakao() {
+    const url = window.location.href;
+    const kakaoUrl = 'https://sharer.kakao.com/talk/friends/picker/link?app_key=DEMO&validation_action=default&validation_params=%7B%7D';
+    // 카카오 SDK 미설치 시 링크 복사로 대체
+    if (navigator.share) {
+      navigator.share({
+        title: '공동주택 세대점검 초대장 — 남원소방서',
+        text: '가족의 안전을 위한 세대점검에 함께해 주세요!',
+        url: url
+      }).catch(() => {});
+    } else {
+      // 모바일 카카오톡 앱 URL 스킴
+      const kakaoMsg = encodeURIComponent('공동주택 세대점검 초대장 — 남원소방서\n' + url);
+      window.open('kakaotalk://msg/send?text=' + kakaoMsg, '_blank');
+      // 앱이 없으면 링크 복사
+      setTimeout(() => copyLink(), 300);
+    }
+  }
+
+  function copyLink() {
+    const url = window.location.href;
+    const btn = document.getElementById('copyBtn');
+    navigator.clipboard.writeText(url).then(() => {
+      btn.classList.add('copied');
+      btn.querySelector('.share-icon').textContent = '✓';
+      btn.querySelector('span:last-child') && (btn.childNodes[2].textContent = ' 복사됨!');
+      btn.innerHTML = '<span class="share-icon">✓</span> 복사됨!';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = '<span class="share-icon">🔗</span> 링크 복사';
+      }, 2000);
+    }).catch(() => {
+      // clipboard API 실패 시 구형 방식
+      const el = document.createElement('textarea');
+      el.value = url; document.body.appendChild(el);
+      el.select(); document.execCommand('copy'); document.body.removeChild(el);
+      btn.innerHTML = '<span class="share-icon">✓</span> 복사됨!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = '<span class="share-icon">🔗</span> 링크 복사';
+      }, 2000);
+    });
   }
 
   // 배경음악
