@@ -40,30 +40,61 @@
   }
   .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-  /* --- 상단 타이틀 (아치형 대문) --- */
+  /* --- ★ 상단 타이틀 (프리미엄 대문 디자인) --- */
   .hero-wrap { padding: 30px 20px 20px; }
   .hero-arch {
-    background: var(--paper-card);
+    background: linear-gradient(135deg, #FFFFFF 0%, #FCFAF7 100%);
     border-radius: 160px 160px 24px 24px;
-    padding: 80px 20px 70px; text-align: center;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.03);
-    border: 1px solid rgba(255,255,255,0.5);
+    padding: 75px 20px 60px; text-align: center;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.04);
+    border: 1px solid rgba(132, 35, 35, 0.08);
     position: relative; overflow: hidden;
   }
+  /* 이중 안쪽 테두리 (클래식 프레임 효과) */
+  .hero-arch::before {
+    content: ''; position: absolute;
+    top: 10px; left: 10px; right: 10px; bottom: 10px;
+    border: 1px solid rgba(132, 35, 35, 0.15);
+    border-radius: 150px 150px 14px 14px;
+    pointer-events: none;
+  }
+  
+  /* 은은하게 반짝이는 빛 효과 */
+  .sparkle {
+    position: absolute; background: var(--point-red-light); 
+    border-radius: 50%; opacity: 0;
+    animation: twinkle 4s infinite ease-in-out;
+  }
+  @keyframes twinkle {
+    0% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 0.25; transform: scale(1.2); }
+    100% { opacity: 0; transform: scale(0.5); }
+  }
+
+  .hero-eng {
+    font-family: 'Noto Serif KR', serif; font-size: 11px; font-weight: 500;
+    letter-spacing: 6px; color: var(--point-red-light); margin-bottom: 16px;
+    opacity: 0.8;
+  }
   .hero-badge { 
-    display: inline-block; font-size: 13px; font-weight: 600; color: var(--point-red);
-    letter-spacing: 2px; padding: 6px 18px; border: 1px solid var(--point-red);
-    border-radius: 50px; margin-bottom: 28px;
+    display: inline-block; font-size: 13px; font-weight: 600; 
+    color: white; background: var(--point-red);
+    letter-spacing: 2px; padding: 6px 18px; 
+    border-radius: 50px; margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(132, 35, 35, 0.2);
+  }
+  .hero-divider {
+    margin: 0 auto 24px; display: block; color: var(--point-red-light); opacity: 0.4;
   }
   .hero-title { 
     font-family: 'Noto Serif KR', serif; font-size: 34px; font-weight: 700; 
-    color: var(--text-dark); line-height: 1.4; margin-bottom: 18px; letter-spacing: -1px;
+    color: var(--text-dark); line-height: 1.4; margin-bottom: 16px; letter-spacing: -1px;
   }
   .hero-sub { 
-    font-size: 15px; color: var(--text-gray); font-weight: 400; letter-spacing: -0.5px; 
+    font-size: 15px; color: var(--text-gray); font-weight: 400; line-height: 1.6; letter-spacing: -0.5px; 
   }
   .hero-line {
-    width: 1px; height: 50px; background: var(--border-color);
+    width: 1px; height: 50px; background: rgba(132, 35, 35, 0.2);
     margin: 40px auto 0;
   }
 
@@ -78,6 +109,27 @@
   }
   .intro-text { font-size: 15px; line-height: 1.9; color: var(--text-dark); font-weight: 300; }
 
+  /* --- 진행도 표시 바 (Progress Bar) --- */
+  .progress-container {
+    background: var(--paper-card); border-radius: 20px; padding: 24px;
+    margin: 0 20px 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+    border: 1px solid var(--border-color);
+  }
+  .progress-text {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'Noto Serif KR', serif; font-weight: 600; color: var(--text-dark);
+    margin-bottom: 14px; font-size: 16px;
+  }
+  .progress-count { font-family: 'Noto Sans KR', sans-serif; font-size: 15px; color: var(--text-gray); }
+  .progress-count strong { color: var(--point-red); font-size: 18px; }
+  .progress-bar-bg {
+    width: 100%; height: 8px; background: #F0EBE1; border-radius: 10px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; width: 0%; background: var(--point-red); border-radius: 10px;
+    transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
   /* --- 갤러리형 체크리스트 --- */
   .gallery-wrap { padding: 0 20px 40px; }
   .card {
@@ -86,30 +138,37 @@
     transition: transform 0.4s ease, box-shadow 0.4s ease;
   }
   .card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
-  
-  /* 단일 이미지 영역 */
-  .card-img-wrap {
-    width: 100%; aspect-ratio: 4 / 3; overflow: hidden; background: #FAFAFA;
-    position: relative; cursor: zoom-in;
-  }
-  .card-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-  .card-img-wrap:hover .card-img { transform: scale(1.04); }
 
   /* --- 다중 이미지 슬라이더 (버튼/스와이프) 영역 --- */
   .slider-wrap {
-    position: relative; width: 100%; aspect-ratio: 4 / 3; background: #FAFAFA;
+    position: relative; width: 100%; aspect-ratio: 4 / 3; background: #F8F6F4;
   }
   .slider {
     display: flex; width: 100%; height: 100%; overflow-x: auto; 
     scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none;
-    scroll-behavior: smooth; /* 버튼 클릭 시 부드럽게 넘어가도록 설정 */
+    scroll-behavior: smooth; 
   }
   .slider::-webkit-scrollbar { display: none; }
   .slide {
     flex: 0 0 100%; height: 100%; scroll-snap-align: center; 
+    position: relative; cursor: zoom-in; overflow: hidden;
+  }
+  .slide img { 
+    width: 100%; height: 100%; object-fit: contain; display: block; 
+    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .slide:hover img { transform: scale(1.04); }
+  
+  /* 단일 이미지 영역 (경보, 피난, 기타) */
+  .card-img-wrap {
+    width: 100%; aspect-ratio: 4 / 3; overflow: hidden; background: #F8F6F4;
     position: relative; cursor: zoom-in;
   }
-  .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .card-img { 
+    width: 100%; height: 100%; object-fit: contain; display: block; 
+    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+  }
+  .card-img-wrap:hover .card-img { transform: scale(1.04); }
   
   /* 좌우 이동 버튼 (클릭 영역) */
   .nav-btn {
@@ -128,15 +187,15 @@
   /* 하단 도트(점) */
   .slider-dots {
     position: absolute; bottom: 16px; left: 0; width: 100%;
-    display: flex; justify-content: center; gap: 6px; pointer-events: none;
+    display: flex; justify-content: center; gap: 6px; pointer-events: none; z-index: 10;
   }
   .slider-dots .dot {
     width: 6px; height: 6px; border-radius: 50%;
-    background: rgba(255, 255, 255, 0.4); box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    background: rgba(0, 0, 0, 0.2); box-shadow: 0 1px 3px rgba(255,255,255,0.4);
     transition: all 0.3s ease;
   }
   .slider-dots .dot.active {
-    background: rgba(255, 255, 255, 0.95); width: 18px; border-radius: 4px;
+    background: var(--point-red); width: 18px; border-radius: 4px;
   }
 
   /* 스와이프 안내 문구 */
@@ -208,7 +267,7 @@
     display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease;
   }
   .image-zoom-modal.show { opacity: 1; visibility: visible; }
-  .zoom-modal-content { max-width: 95%; max-height: 90%; border-radius: 12px; transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .zoom-modal-content { max-width: 95%; max-height: 90%; border-radius: 12px; transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); object-fit: contain; }
   .image-zoom-modal.show .zoom-modal-content { transform: scale(1); }
   .close-zoom { position: absolute; top: 20px; right: 24px; color: white; font-size: 44px; font-weight: 300; cursor: pointer; z-index: 10001; }
 
@@ -232,12 +291,29 @@
 </audio>
 
 <div class="page">
-  <!-- 대문 (아치형) -->
+  <!-- ★ 프리미엄 대문 (아치형) -->
   <div class="hero-wrap">
     <div class="hero-arch">
+      <!-- 반짝이는 빛 효과 -->
+      <div class="sparkle" style="width:5px; height:5px; top:15%; left:22%; animation-delay: 0s;"></div>
+      <div class="sparkle" style="width:6px; height:6px; top:25%; right:18%; animation-delay: 1.5s;"></div>
+      <div class="sparkle" style="width:4px; height:4px; top:65%; left:15%; animation-delay: 0.8s;"></div>
+      <div class="sparkle" style="width:7px; height:7px; top:55%; right:12%; animation-delay: 2.2s;"></div>
+
+      <p class="hero-eng">INVITATION</p>
+      
+      <!-- 실링 왁스 스타일 배지 -->
       <div class="hero-badge">남원소방서</div>
-      <h1 class="hero-title">공동주택 세대점검<br>초대장</h1>
-      <p class="hero-sub">가족의 안전을 지키는 뜻깊은 동행에 초대합니다</p>
+      
+      <!-- 다이아몬드 클래식 장식선 SVG -->
+      <svg class="hero-divider" viewBox="0 0 60 20" width="60" height="20" fill="none">
+         <path d="M30 10 L0 10 M30 10 L60 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+         <path d="M30 3 L23 10 L30 17 L37 10 Z" fill="currentColor"/>
+      </svg>
+
+      <h1 class="hero-title">공동주택<br>세대점검 초대</h1>
+      <p class="hero-sub">가족의 안전을 지키는<br>뜻깊은 동행에 함께해 주세요</p>
+      
       <div class="hero-line"></div>
     </div>
   </div>
@@ -256,17 +332,25 @@
     </p>
   </div>
 
+  <!-- 진행도 표시 바 (Progress Bar) -->
+  <div class="progress-container fade-up">
+    <div class="progress-text">
+      <span>안전 체크리스트</span>
+      <span class="progress-count"><strong id="progress-text-count">0</strong> / 4</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
   <!-- 갤러리형 체크리스트 -->
   <div class="gallery-wrap">
     
-    <!-- 소화설비 (★ 클릭 및 스와이프 슬라이더 적용) -->
+    <!-- 1. 소화설비 (기존 2장 + 실습 1장 = 총 3장) -->
     <div class="card fade-up">
       <div class="slider-wrap">
         <div class="swipe-hint">화살표를 눌러 넘겨보세요</div>
-        
-        <!-- 좌우 화살표 버튼 -->
         <button class="nav-btn prev-btn" onclick="moveSlide(this, -1)">❮</button>
-        
         <div class="slider" onscroll="updateDots(this)">
           <div class="slide" onclick="openImgModal('1-1.jpg')">
             <img src="1-1.jpg" alt="소화설비 1">
@@ -274,17 +358,18 @@
           <div class="slide" onclick="openImgModal('1-2.jpg')">
             <img src="1-2.jpg" alt="소화설비 2">
           </div>
+          <!-- 새로 추가된 실습 사진 영역 -->
+          <div class="slide" onclick="openImgModal('1-3.jpg')">
+            <img src="1-3.jpg" alt="소화설비 실습">
+          </div>
         </div>
-
         <button class="nav-btn next-btn" onclick="moveSlide(this, 1)">❯</button>
-
-        <!-- 하단 도트(점) -->
         <div class="slider-dots">
           <span class="dot active"></span>
           <span class="dot"></span>
+          <span class="dot"></span> <!-- 점 추가 -->
         </div>
       </div>
-      
       <div class="card-body">
         <h3 class="card-title">소화설비</h3>
         <p class="card-desc">초기 진화를 돕는 소중한 설비들입니다. 우리 집에 설치된 설비들의 상태를 확인해 주세요.</p>
@@ -298,10 +383,25 @@
       </div>
     </div>
 
-    <!-- 경보설비 -->
+    <!-- 2. 경보설비 (기존 1장 + 실습 1장 = 총 2장) -->
     <div class="card fade-up">
-      <div class="card-img-wrap" onclick="openImgModal('2.jpg')">
-        <img src="2.jpg" alt="경보설비" class="card-img">
+      <div class="slider-wrap">
+        <div class="swipe-hint">화살표를 눌러 넘겨보세요</div>
+        <button class="nav-btn prev-btn" onclick="moveSlide(this, -1)">❮</button>
+        <div class="slider" onscroll="updateDots(this)">
+          <div class="slide" onclick="openImgModal('2.jpg')">
+            <img src="2.jpg" alt="경보설비 안내">
+          </div>
+          <!-- 새로 추가된 실습 사진 영역 -->
+          <div class="slide" onclick="openImgModal('2-2.jpg')">
+            <img src="2-2.jpg" alt="경보설비 실습">
+          </div>
+        </div>
+        <button class="nav-btn next-btn" onclick="moveSlide(this, 1)">❯</button>
+        <div class="slider-dots">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+        </div>
       </div>
       <div class="card-body">
         <h3 class="card-title">경보설비</h3>
@@ -314,10 +414,25 @@
       </div>
     </div>
 
-    <!-- 피난설비 -->
+    <!-- 3. 피난설비 (기존 1장 + 실습 1장 = 총 2장) -->
     <div class="card fade-up">
-      <div class="card-img-wrap" onclick="openImgModal('3.jpg')">
-        <img src="3.jpg" alt="피난설비" class="card-img">
+      <div class="slider-wrap">
+        <div class="swipe-hint">화살표를 눌러 넘겨보세요</div>
+        <button class="nav-btn prev-btn" onclick="moveSlide(this, -1)">❮</button>
+        <div class="slider" onscroll="updateDots(this)">
+          <div class="slide" onclick="openImgModal('3.jpg')">
+            <img src="3.jpg" alt="피난설비 안내">
+          </div>
+          <!-- 새로 추가된 실습 사진 영역 -->
+          <div class="slide" onclick="openImgModal('3-2.jpg')">
+            <img src="3-2.jpg" alt="피난설비 실습">
+          </div>
+        </div>
+        <button class="nav-btn next-btn" onclick="moveSlide(this, 1)">❯</button>
+        <div class="slider-dots">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+        </div>
       </div>
       <div class="card-body">
         <h3 class="card-title">피난설비</h3>
@@ -330,10 +445,25 @@
       </div>
     </div>
 
-    <!-- 기타설비 -->
+    <!-- 4. 기타설비 (기존 1장 + 실습 1장 = 총 2장) -->
     <div class="card fade-up">
-      <div class="card-img-wrap" onclick="openImgModal('4.jpg')">
-        <img src="4.jpg" alt="기타설비" class="card-img">
+      <div class="slider-wrap">
+        <div class="swipe-hint">화살표를 눌러 넘겨보세요</div>
+        <button class="nav-btn prev-btn" onclick="moveSlide(this, -1)">❮</button>
+        <div class="slider" onscroll="updateDots(this)">
+          <div class="slide" onclick="openImgModal('4.jpg')">
+            <img src="4.jpg" alt="기타설비 안내">
+          </div>
+          <!-- 새로 추가된 실습 사진 영역 -->
+          <div class="slide" onclick="openImgModal('4-2.jpg')">
+            <img src="4-2.jpg" alt="기타설비 실습">
+          </div>
+        </div>
+        <button class="nav-btn next-btn" onclick="moveSlide(this, 1)">❯</button>
+        <div class="slider-dots">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+        </div>
       </div>
       <div class="card-body">
         <h3 class="card-title">기타설비</h3>
@@ -404,7 +534,6 @@
     const wrap = btn.closest('.slider-wrap');
     const slider = wrap.querySelector('.slider');
     const slideWidth = slider.clientWidth;
-    // 클릭한 방향(-1 은 왼쪽, 1 은 오른쪽)으로 슬라이드 너비만큼 이동
     slider.scrollBy({ left: direction * slideWidth, behavior: 'smooth' });
   }
 
@@ -412,7 +541,6 @@
   function updateDots(slider) {
     const slideWidth = slider.clientWidth;
     const scrollLeft = slider.scrollLeft;
-    // 현재 스크롤 위치를 기준으로 몇 번째 사진인지 계산
     const index = Math.round(scrollLeft / slideWidth);
     
     const dotsContainer = slider.parentElement.querySelector('.slider-dots');
@@ -423,11 +551,13 @@
     });
   }
 
-  // --- 체크리스트 상태 관리 ---
+  // --- 체크리스트 및 진행도 바(Progress Bar) 상태 관리 ---
   let checkedStates = [false, false, false, false];
   let hasSeenCompleteModal = false;
+  const totalItems = 4;
 
   function toggleCheck(btn, index) {
+    // 1. 버튼 상태 변경
     checkedStates[index] = !checkedStates[index];
     
     if (checkedStates[index]) {
@@ -438,10 +568,15 @@
       btn.textContent = '[ ✓ 우리 집 점검 완료 ]';
     }
 
-    const allChecked = checkedStates.every(state => state === true);
-    if (allChecked && !hasSeenCompleteModal) {
+    // 2. 진행도 바(Progress Bar) 업데이트
+    const checkedCount = checkedStates.filter(state => state === true).length;
+    document.getElementById('progress-text-count').textContent = checkedCount;
+    document.getElementById('progress-fill').style.width = (checkedCount / totalItems * 100) + '%';
+
+    // 3. 모두 체크 시 완료 모달 띄우기
+    if (checkedCount === totalItems && !hasSeenCompleteModal) {
       hasSeenCompleteModal = true;
-      setTimeout(showModal, 400);
+      setTimeout(showModal, 500); 
     }
   }
 
