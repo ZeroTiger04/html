@@ -344,10 +344,10 @@
   }
   .share-btn:active { transform: scale(0.96); }
   .share-btn-kakao {
-    background: #FEE500; color: #3A1D1D;
-    box-shadow: 0 6px 18px rgba(254, 229, 0, 0.35);
+    background: var(--point-red); color: white;
+    box-shadow: 0 6px 18px rgba(132, 35, 35, 0.25);
   }
-  .share-btn-kakao:hover { background: #FFD700; box-shadow: 0 8px 22px rgba(254, 229, 0, 0.45); }
+  .share-btn-kakao:hover { background: var(--point-red-light); box-shadow: 0 8px 22px rgba(132, 35, 35, 0.35); }
   .share-btn-copy {
     background: var(--paper-card); color: var(--text-dark);
     border: 1.5px solid var(--border-color);
@@ -358,16 +358,36 @@
   .share-icon { font-size: 18px; }
 
   /* --- 하단 푸터 --- */
-  .footer { padding: 40px 24px 60px; text-align: center; }
-  .footer-icon { font-size: 20px; color: var(--point-red); margin-bottom: 16px; opacity: 0.5; }
-  .footer-text { font-size: 14px; color: var(--text-gray); line-height: 1.8; margin-bottom: 16px; font-weight: 300; }
-  .footer-notice { 
-    display: inline-block; background: #FFF9F5; color: var(--point-red); 
-    font-size: 15px; font-weight: 600; padding: 10px 20px; 
-    border-radius: 30px; border: 1px solid #F5EAE1; margin-bottom: 24px;
-    box-shadow: 0 4px 10px rgba(132, 35, 35, 0.05);
+  .footer { padding: 10px 20px 60px; text-align: center; }
+
+  .footer-divider {
+    width: 40px; height: 2px;
+    background: var(--point-red); opacity: 0.25;
+    margin: 0 auto 28px; border-radius: 2px;
   }
-  .footer-logo { font-family:'Noto Serif KR',serif; font-size:18px; font-weight:600; color: var(--text-dark); letter-spacing: 2px; }
+  .footer-text {
+    font-size: 15px; color: var(--text-gray); line-height: 1.9;
+    font-weight: 300; margin-bottom: 24px;
+    font-family: 'Noto Serif KR', serif;
+  }
+  .footer-notice {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 600; color: var(--point-red);
+    margin-bottom: 32px;
+  }
+  .footer-notice-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--point-red); opacity: 0.5;
+    animation: dotPulse 2s infinite;
+  }
+  @keyframes dotPulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.4); }
+  }
+  .footer-logo {
+    font-family:'Noto Serif KR',serif; font-size:15px; font-weight:600;
+    color: var(--text-gray); letter-spacing: 3px; opacity: 0.7;
+  }
 
   /* --- 점검 완료 모달 --- */
   .modal-overlay {
@@ -615,8 +635,8 @@
   <div class="share-section fade-up">
     <p class="share-title">이웃에게도 알려주세요 🏠</p>
     <div class="share-btns">
-      <button class="share-btn share-btn-kakao" onclick="shareKakao()">
-        <span class="share-icon">💬</span> 카카오톡 공유
+      <button class="share-btn share-btn-kakao" onclick="shareLink()">
+        <span class="share-icon">🔗</span> 링크 공유
       </button>
       <button class="share-btn share-btn-copy" id="copyBtn" onclick="copyLink()">
         <span class="share-icon">🔗</span> 링크 복사
@@ -626,9 +646,12 @@
 
   <!-- 푸터 -->
   <div class="footer fade-up">
-    <div class="footer-icon">❧</div>
-    <p class="footer-text">안전한 일상을 위해 늘 시민의 곁에 있겠습니다.</p>
-    <div class="footer-notice">💡 우리 집 세대 점검은 2년마다!</div>
+    <div class="footer-divider"></div>
+    <p class="footer-text">안전한 일상을 위해<br>늘 시민의 곁에 있겠습니다.</p>
+    <div class="footer-notice">
+      <span class="footer-notice-dot"></span>
+      우리 집 세대 점검은 2년마다!
+    </div>
     <div class="footer-logo">남원소방서 드림</div>
   </div>
 </div>
@@ -776,10 +799,8 @@
   }
 
   // 공유 기능
-  function shareKakao() {
+  function shareLink() {
     const url = window.location.href;
-    const kakaoUrl = 'https://sharer.kakao.com/talk/friends/picker/link?app_key=DEMO&validation_action=default&validation_params=%7B%7D';
-    // 카카오 SDK 미설치 시 링크 복사로 대체
     if (navigator.share) {
       navigator.share({
         title: '공동주택 세대점검 초대장 — 남원소방서',
@@ -787,11 +808,8 @@
         url: url
       }).catch(() => {});
     } else {
-      // 모바일 카카오톡 앱 URL 스킴
-      const kakaoMsg = encodeURIComponent('공동주택 세대점검 초대장 — 남원소방서\n' + url);
-      window.open('kakaotalk://msg/send?text=' + kakaoMsg, '_blank');
-      // 앱이 없으면 링크 복사
-      setTimeout(() => copyLink(), 300);
+      // 공유 API 미지원 시 링크 복사로 대체
+      copyLink();
     }
   }
 
