@@ -7,291 +7,356 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --fire-red: #D32F2F;
-    --fire-dark: #9A1B1B;
-    --fire-bright: #FF5252;
-    --cream-dark: #F5EDE0;
-    --cream-light: #FDFAF6;
-    --text-dark: #2A1A10;
-    --border: rgba(139,32,32,0.12);
+    --bg-base: #F5F2EC; 
+    --paper-card: #FFFFFF; 
+    --point-red: #842323; 
+    --point-red-light: #A33333;
+    --text-dark: #2C2A28; 
+    --text-gray: #7A7571;
+    --border-color: #EBE5DB;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   
-  /* 사이트 진입 효과 설정 */
   body { 
-    background: var(--cream-dark); font-family: 'Noto Sans KR', sans-serif; 
+    background: #EAE6DF; font-family: 'Noto Sans KR', sans-serif; 
     color: var(--text-dark); min-height: 100vh; overflow-x: hidden; 
   }
   
   .page { 
-    max-width: 480px; margin: 0 auto; position: relative; background: var(--cream-dark); 
-    box-shadow: 0 0 30px rgba(0,0,0,0.05); 
-    opacity: 0; animation: pageFadeIn 0.8s ease-out forwards; 
+    max-width: 480px; margin: 0 auto; background: var(--bg-base); 
+    box-shadow: 0 0 30px rgba(0,0,0,0.05); position: relative;
+    padding-bottom: 20px;
+    opacity: 0; animation: pageLoad 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   }
   
-  @keyframes pageFadeIn { 
-    from { opacity: 0; transform: scale(0.98); } 
-    to { opacity: 1; transform: none; } 
+  @keyframes pageLoad { 
+    from { opacity: 0; transform: translateY(15px); } 
+    to { opacity: 1; transform: translateY(0); } 
   }
 
-  /* --- 상단 헤더 디자인 --- */
-  .hero { 
-    background: linear-gradient(135deg, var(--fire-dark) 0%, var(--fire-red) 50%, #B71C1C 100%);
-    padding: 70px 32px 80px; text-align: center; position: relative; overflow: hidden;
+  .fade-up {
+    opacity: 0; transform: translateY(40px);
+    transition: all 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
-  
-  /* 떠다니는 불티 애니메이션 */
-  .spark { position: absolute; background: rgba(255, 255, 255, 0.4); border-radius: 50%; animation: floatUp linear infinite; pointer-events: none; }
-  .spark:nth-child(1) { width: 4px; height: 4px; left: 10%; bottom: -10px; animation-duration: 4s; animation-delay: 0s; }
-  .spark:nth-child(2) { width: 6px; height: 6px; left: 30%; bottom: -10px; animation-duration: 5s; animation-delay: 1s; }
-  .spark:nth-child(3) { width: 3px; height: 3px; left: 50%; bottom: -10px; animation-duration: 3.5s; animation-delay: 2s; }
-  .spark:nth-child(4) { width: 5px; height: 5px; left: 70%; bottom: -10px; animation-duration: 4.5s; animation-delay: 0.5s; }
-  .spark:nth-child(5) { width: 7px; height: 7px; left: 85%; bottom: -10px; animation-duration: 6s; animation-delay: 1.5s; }
-  @keyframes floatUp {
-    0% { transform: translateY(0) scale(1); opacity: 1; }
-    100% { transform: translateY(-150px) scale(0); opacity: 0; }
-  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-  /* 남원소방서 뱃지 */
+  /* --- 상단 타이틀 (아치형 대문) --- */
+  .hero-wrap { padding: 30px 20px 20px; }
+  .hero-arch {
+    background: var(--paper-card);
+    border-radius: 160px 160px 24px 24px;
+    padding: 80px 20px 70px; text-align: center;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.03);
+    border: 1px solid rgba(255,255,255,0.5);
+    position: relative; overflow: hidden;
+  }
   .hero-badge { 
-    display:inline-flex; align-items:center; justify-content:center;
-    background: rgba(255, 255, 255, 0.15); 
-    border: 1px solid rgba(255, 255, 255, 0.3); 
-    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-    color: #FFFFFF; font-size: 15px; font-weight: 700; 
-    letter-spacing: 2px; padding: 10px 24px; border-radius: 50px; margin-bottom: 28px; 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15); position: relative; z-index: 2;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    display: inline-block; font-size: 13px; font-weight: 600; color: var(--point-red);
+    letter-spacing: 2px; padding: 6px 18px; border: 1px solid var(--point-red);
+    border-radius: 50px; margin-bottom: 28px;
+  }
+  .hero-title { 
+    font-family: 'Noto Serif KR', serif; font-size: 34px; font-weight: 700; 
+    color: var(--text-dark); line-height: 1.4; margin-bottom: 18px; letter-spacing: -1px;
+  }
+  .hero-sub { 
+    font-size: 15px; color: var(--text-gray); font-weight: 400; letter-spacing: -0.5px; 
+  }
+  .hero-line {
+    width: 1px; height: 50px; background: var(--border-color);
+    margin: 40px auto 0;
+  }
+
+  /* --- 모시는 글 (Intro) --- */
+  .intro {
+    background: var(--paper-card); margin: 0 20px 40px; border-radius: 24px;
+    padding: 50px 24px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.03);
+  }
+  .intro-title {
+    font-family: 'Noto Serif KR', serif; font-size: 20px; color: var(--point-red);
+    margin-bottom: 24px; font-weight: 600;
+  }
+  .intro-text { font-size: 15px; line-height: 1.9; color: var(--text-dark); font-weight: 300; }
+
+  /* --- 갤러리형 체크리스트 --- */
+  .gallery-wrap { padding: 0 20px 40px; }
+  .card {
+    background: var(--paper-card); border-radius: 24px; overflow: hidden; margin-bottom: 40px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.04);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+  
+  /* 단일 이미지 영역 */
+  .card-img-wrap {
+    width: 100%; aspect-ratio: 4 / 3; overflow: hidden; background: #FAFAFA;
+    position: relative; cursor: zoom-in;
+  }
+  .card-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+  .card-img-wrap:hover .card-img { transform: scale(1.04); }
+
+  /* --- 다중 이미지 슬라이더 (버튼/스와이프) 영역 --- */
+  .slider-wrap {
+    position: relative; width: 100%; aspect-ratio: 4 / 3; background: #FAFAFA;
+  }
+  .slider {
+    display: flex; width: 100%; height: 100%; overflow-x: auto; 
+    scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none;
+    scroll-behavior: smooth; /* 버튼 클릭 시 부드럽게 넘어가도록 설정 */
+  }
+  .slider::-webkit-scrollbar { display: none; }
+  .slide {
+    flex: 0 0 100%; height: 100%; scroll-snap-align: center; 
+    position: relative; cursor: zoom-in;
+  }
+  .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  
+  /* 좌우 이동 버튼 (클릭 영역) */
+  .nav-btn {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 36px; height: 36px; border-radius: 50%; border: none;
+    background: rgba(255, 255, 255, 0.85); color: var(--point-red);
+    font-size: 16px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    transition: all 0.2s ease;
+  }
+  .nav-btn:active { transform: translateY(-50%) scale(0.9); }
+  .prev-btn { left: 12px; }
+  .next-btn { right: 12px; }
+
+  /* 하단 도트(점) */
+  .slider-dots {
+    position: absolute; bottom: 16px; left: 0; width: 100%;
+    display: flex; justify-content: center; gap: 6px; pointer-events: none;
+  }
+  .slider-dots .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4); box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+  }
+  .slider-dots .dot.active {
+    background: rgba(255, 255, 255, 0.95); width: 18px; border-radius: 4px;
+  }
+
+  /* 스와이프 안내 문구 */
+  .swipe-hint {
+    position: absolute; top: 16px; right: 16px; z-index: 2;
+    background: rgba(0, 0, 0, 0.4); color: white;
+    font-size: 11px; font-weight: 500; padding: 6px 12px; border-radius: 20px; 
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); pointer-events: none; 
+    animation: swipePulse 2.5s infinite;
+  }
+  @keyframes swipePulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+  }
+
+  /* 카드 하단 텍스트 및 버튼 */
+  .card-body { padding: 32px 24px; text-align: center; }
+  .card-title {
+    font-family: 'Noto Serif KR', serif; font-size: 22px; font-weight: 600;
+    color: var(--text-dark); margin-bottom: 12px; letter-spacing: -0.5px;
+  }
+  .card-desc {
+    font-size: 14px; color: var(--text-gray); line-height: 1.6; margin-bottom: 24px;
+    word-break: keep-all; font-weight: 300;
   }
   
-  .hero-title { font-family: 'Noto Serif KR', serif; font-size: 34px; font-weight: 900; color: #FFFFFF; line-height: 1.35; text-shadow: 0 4px 10px rgba(0,0,0,0.3); position: relative; z-index: 2; }
-  .hero-sub { font-size: 15px; color: rgba(255,255,255,0.9); margin-top: 14px; position: relative; z-index: 2; font-weight: 400; letter-spacing: -0.5px; }
-  
-  /* 물결 바닥 효과 */
-  .hero-wave { position: absolute; bottom: -1px; left: 0; width: 100%; overflow: hidden; line-height: 0; z-index: 1; }
-  .hero-wave svg { display: block; width: calc(100% + 1.3px); height: 40px; }
+  .item-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 30px; }
+  .tag { background: #FFF9F5; color: var(--point-red-light); font-size: 13px; font-weight: 500; padding: 6px 14px; border-radius: 30px; border: 1px solid #F5EAE1; }
 
-  /* 섹션 스타일 */
-  .section { padding: 40px 20px 50px; background:var(--cream-light); }
-  .section-header { display:flex; align-items:center; gap:10px; margin-bottom:20px; }
-  .section-line { width:4px; height:18px; background:var(--fire-red); border-radius:2px; }
-  .section-title { font-family:'Noto Serif KR',serif; font-size:18px; font-weight:700; color:var(--text-dark); }
-  
-  /* 진행도 바 */
-  .progress-wrap { background:white; border-radius:14px; padding:18px 20px; margin-bottom:24px; border:1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
-  .progress-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
-  .progress-label { font-size:13px; font-weight:700; color:var(--fire-red); }
-  .progress-count { font-family:'Noto Serif KR',serif; font-size:16px; font-weight:800; color:var(--fire-red); }
-  .progress-track { height:8px; background:rgba(211,47,47,0.1); border-radius:10px; overflow:hidden; }
-  .progress-fill { height:100%; background: linear-gradient(90deg, var(--fire-dark), var(--fire-bright)); border-radius:10px; width:0%; transition:width 0.6s cubic-bezier(0.4,0,0.2,1); }
-  
-  /* 체크 리스트 */
-  .check-block { 
-    margin-bottom:14px; border-radius:18px; border:1px solid var(--border); overflow:hidden; 
-    background:white; transition: all 0.3s ease; cursor:pointer;
-    opacity: 0; transform: translateY(20px); animation: slideUpFade 0.6s ease-out forwards;
+  .check-btn {
+    width: 100%; padding: 18px; border-radius: 30px; font-size: 16px; font-weight: 600;
+    border: 1px solid var(--point-red); background: var(--paper-card); color: var(--point-red);
+    cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); font-family: 'Noto Sans KR', sans-serif;
   }
-  .check-block:nth-child(3) { animation-delay: 0.1s; }
-  .check-block:nth-child(4) { animation-delay: 0.2s; }
-  .check-block:nth-child(5) { animation-delay: 0.3s; }
-  .check-block:nth-child(6) { animation-delay: 0.4s; }
-  
-  @keyframes slideUpFade { to { opacity: 1; transform: translateY(0); } }
+  .check-btn.checked { background: var(--point-red); color: white; border-color: var(--point-red); box-shadow: 0 8px 20px rgba(132, 35, 35, 0.2); }
 
-  .check-block:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.06); }
-  .check-block.done { border-color:var(--fire-red); box-shadow: 0 4px 12px rgba(211,47,47,0.08); background: #FFFAFA; }
-  .check-item { display:flex; align-items:center; gap:16px; padding:18px 20px; -webkit-tap-highlight-color:transparent; }
-  .item-icon { width:48px; height:48px; border-radius:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-  .item-text { flex:1; }
-  .item-main { font-size:16px; font-weight:700; color:var(--text-dark); display:block; margin-bottom:4px; }
-  .item-sub { font-size:12px; color:#777; display:block; line-height: 1.4; }
-  .item-check { width:26px; height:26px; border-radius:50%; border:2px solid #D0C8C0; display:flex; align-items:center; justify-content:center; flex-shrink:0; background: white; transition:all 0.3s ease; }
-  .check-block.done .item-check { background:var(--fire-red); border-color:var(--fire-red); }
-  .check-block.done .item-check svg { opacity:1; transform:scale(1); }
-  .item-check svg { opacity:0; transform:scale(0.5); transition:0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  /* --- 하단 마무리 (푸터) --- */
+  .footer { padding: 40px 24px 60px; text-align: center; }
+  .footer-icon { font-size: 20px; color: var(--point-red); margin-bottom: 16px; opacity: 0.5; }
+  .footer-text { font-size: 14px; color: var(--text-gray); line-height: 1.8; margin-bottom: 16px; font-weight: 300; }
+  .footer-logo { font-family:'Noto Serif KR',serif; font-size:18px; font-weight:600; color: var(--text-dark); letter-spacing: 2px; }
 
-  /* 사진 가이드 */
-  .guide-panel { max-height:0; overflow:hidden; transition:max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1); background:#FAFAF8; }
-  .guide-panel.open { max-height:1000px; border-top:1px solid rgba(211,47,47,0.1); }
-  .guide-inner { padding:20px; }
-  .illust-wrap img { width: 100%; height: auto; border-radius:12px; display: block; box-shadow: 0 4px 12px rgba(0,0,0,0.1); cursor: zoom-in; }
-
-  /* --- 하단 푸터 디자인 --- */
-  .footer { 
-    background: linear-gradient(180deg, #2A1A10 0%, #150C07 100%); 
-    padding: 50px 24px 60px; text-align: center; color: white;
-    border-top: 4px solid var(--fire-dark); position: relative; overflow: hidden;
+  /* --- 점검 완료 모달 (레이어) --- */
+  .modal-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.65);
+    z-index: 10000; display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden; transition: all 0.4s ease; backdrop-filter: blur(5px);
   }
-  .footer::before {
-    content: ''; position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
-    width: 200px; height: 200px; background: radial-gradient(circle, rgba(211,47,47,0.1) 0%, transparent 70%); pointer-events: none;
+  .modal-overlay.show { opacity: 1; visibility: visible; }
+  .modal-card {
+    background: var(--paper-card); width: 85%; max-width: 340px; border-radius: 30px; 
+    text-align: center; padding: 40px 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    transform: translateY(30px) scale(0.95); transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  .footer-logo { font-family:'Noto Serif KR',serif; font-size:24px; font-weight:800; color:var(--fire-bright); margin-bottom:8px; letter-spacing: 1px; }
-  .footer-eng { font-size: 11px; color: rgba(255,255,255,0.4); margin-bottom: 24px; letter-spacing: 2px; text-transform: uppercase; }
-  .footer-note { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.7; font-weight: 300; }
-
-  /* --- 학습 완료 레이어 (팝업 모달) --- */
-  .complete-layer {
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.8); z-index: 10000;
-    display: flex; align-items: center; justify-content: center;
-    opacity: 0; visibility: hidden; transition: all 0.3s ease;
-    backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+  .modal-overlay.show .modal-card { transform: translateY(0) scale(1); }
+  .modal-icon {
+    width: 64px; height: 64px; background: var(--point-red); border-radius: 50%;
+    margin: 0 auto 24px; display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 32px; box-shadow: 0 10px 20px rgba(132, 35, 35, 0.2);
   }
-  .complete-layer.show { opacity: 1; visibility: visible; }
-  
-  .success-card {
-    background: white; width: 88%; max-width: 340px; border-radius: 24px; 
-    text-align: center; overflow: hidden; box-shadow: 0 24px 50px rgba(0,0,0,0.3);
-    transform: scale(0.8); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-  .complete-layer.show .success-card { transform: scale(1); }
-
-  .success-header { background: linear-gradient(135deg, var(--fire-bright) 0%, var(--fire-dark) 100%); padding: 40px 20px 30px; position: relative; }
-  .success-icon-wrap {
-    width: 72px; height: 72px; margin: 0 auto 16px; background: rgba(255,255,255,0.2); border-radius: 50%; 
-    display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 10px rgba(255,255,255,0.1);
-  }
-  .animated-check { width: 40px; height: 40px; color: white; }
-  .animated-check-path { stroke-dasharray: 50; stroke-dashoffset: 50; }
-  @keyframes drawCheckLayer { to { stroke-dashoffset: 0; } }
-
-  .success-title { font-family: 'Noto Serif KR', serif; font-size: 22px; font-weight: 800; color: white; margin: 0; letter-spacing: -0.5px; }
-  .success-body { padding: 32px 24px; background: white; }
-  .success-text { font-size: 15px; color: #555; line-height: 1.6; margin-bottom: 24px; }
-  .highlight-badge {
-    display: inline-block; background: #FFF0EB; color: var(--fire-dark);
-    font-size: 13px; font-weight: 700; padding: 4px 12px; border-radius: 20px;
-    margin-top: 12px; border: 1px solid rgba(211,47,47,0.2);
-  }
-
-  .close-btn {
-    background: linear-gradient(135deg, #333 0%, #111 100%); color: white; border: none; padding: 16px 20px;
-    border-radius: 12px; font-weight: 600; font-size: 15px; cursor: pointer;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15); transition: all 0.2s; width: 100%;
-  }
+  .modal-title { font-family: 'Noto Serif KR', serif; font-size: 22px; font-weight: 700; color: var(--text-dark); margin-bottom: 16px; line-height: 1.4; }
+  .modal-text { font-size: 15px; color: var(--text-gray); line-height: 1.6; margin-bottom: 32px; word-break: keep-all; font-weight: 300; }
+  .close-btn { width: 100%; padding: 18px; background: var(--text-dark); color: white; border: none; border-radius: 30px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.2s; }
   .close-btn:active { transform: scale(0.97); }
 
   /* --- 이미지 줌 모달 --- */
   .image-zoom-modal {
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.95); z-index: 9999;
-    display: flex; align-items: center; justify-content: center;
-    opacity: 0; visibility: hidden; transition: all 0.3s ease;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 9999;
+    display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease;
   }
   .image-zoom-modal.show { opacity: 1; visibility: visible; }
-  .zoom-modal-content {
-    max-width: 95%; max-height: 90%; border-radius: 8px;
-    transform: scale(0.8); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
+  .zoom-modal-content { max-width: 95%; max-height: 90%; border-radius: 12px; transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
   .image-zoom-modal.show .zoom-modal-content { transform: scale(1); }
-  .close-zoom {
-    position: absolute; top: 20px; right: 24px; color: white;
-    font-size: 40px; font-weight: 300; cursor: pointer; z-index: 10001;
-  }
+  .close-zoom { position: absolute; top: 20px; right: 24px; color: white; font-size: 44px; font-weight: 300; cursor: pointer; z-index: 10001; }
 
-  /* --- 음악 제어 플로팅 버튼 --- */
+  /* --- 배경음악 토글 버튼 --- */
   .bgm-toggle {
-    position: fixed; bottom: 24px; right: 24px; z-index: 9000;
-    height: 48px; border-radius: 24px; padding: 0 18px; 
-    background: white; border: 2px solid var(--fire-bright); color: var(--fire-red);
-    display: flex; align-items: center; justify-content: center; gap: 6px;
-    box-shadow: 0 6px 16px rgba(211,47,47,0.2); cursor: pointer; transition: all 0.3s ease;
-    font-family: 'Noto Sans KR', sans-serif; font-weight: 700; font-size: 14px;
+    position: fixed; bottom: 24px; right: 24px; z-index: 9000; height: 50px; border-radius: 25px; padding: 0 20px; 
+    background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.5); color: var(--text-gray);
+    display: flex; align-items: center; justify-content: center; gap: 8px; 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08); cursor: pointer; transition: all 0.3s ease; 
+    font-family: 'Noto Sans KR', sans-serif; font-weight: 500; font-size: 14px;
   }
-  .bgm-toggle svg { width: 20px; height: 20px; fill: currentColor; }
-  
-  /* 재생 중일 때 스타일 */
-  .bgm-toggle.playing {
-    background: var(--fire-red); color: white; border-color: var(--fire-red);
-    animation: pulse-bgm 2s infinite;
-  }
-  @keyframes pulse-bgm {
-    0% { box-shadow: 0 0 0 0 rgba(211,47,47,0.4); }
-    70% { box-shadow: 0 0 0 10px rgba(211,47,47,0); }
-    100% { box-shadow: 0 0 0 0 rgba(211,47,47,0); }
-  }
+  .bgm-toggle svg { width: 18px; height: 18px; fill: currentColor; }
+  .bgm-toggle.playing { color: var(--point-red); border-color: rgba(132, 35, 35, 0.2); }
 </style>
 </head>
 <body>
 
-<audio id="bgm" loop autoplay>
+<audio id="bgm" loop autoplay playsinline>
   <source src="bgm.mp3" type="audio/mpeg">
 </audio>
 
 <div class="page">
-  <div class="hero">
-    <div class="spark"></div><div class="spark"></div><div class="spark"></div><div class="spark"></div><div class="spark"></div>
-    <div class="hero-badge">남원소방서</div>
-    <h1 class="hero-title">공동주택 세대점검<br>초대장</h1>
-    <p class="hero-sub">소중한 가족의 안전, 우리가 함께 만듭니다</p>
-    
-    <div class="hero-wave">
-      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,119.5,187.5,103.5,232.07,90.96,278.48,68.64,321.39,56.44Z" fill="#FDFAF6"></path>
-      </svg>
+  <!-- 대문 (아치형) -->
+  <div class="hero-wrap">
+    <div class="hero-arch">
+      <div class="hero-badge">남원소방서</div>
+      <h1 class="hero-title">공동주택 세대점검<br>초대장</h1>
+      <p class="hero-sub">가족의 안전을 지키는 뜻깊은 동행에 초대합니다</p>
+      <div class="hero-line"></div>
     </div>
   </div>
 
-  <div class="section">
-    <div class="section-header"><div class="section-line"></div><h2 class="section-title">점검 방법 학습</h2></div>
+  <!-- 모시는 글 -->
+  <div class="intro fade-up">
+    <h2 class="intro-title">모시는 글</h2>
+    <p class="intro-text">
+      안전한 보금자리를 위한 약속,<br>
+      공동주택 세대점검에 이웃 여러분을 초대합니다.<br><br>
+      가장 편안해야 할 우리 집,<br>
+      작은 관심과 실천이 큰 화재를 예방할 수 있습니다.<br><br>
+      아래 사진들을 보며 우리 집의 안전 설비들을<br>
+      하나씩 확인해 주시길 부탁드립니다.<br>
+      여러분의 소중한 참여가 안전한 남원을 만듭니다.
+    </p>
+  </div>
+
+  <!-- 갤러리형 체크리스트 -->
+  <div class="gallery-wrap">
     
-    <div class="progress-wrap">
-      <div class="progress-top"><span class="progress-label">안전 학습 진행도</span><span class="progress-count" id="prog-count">0 / 4</span></div>
-      <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
-    </div>
-
-    <div class="check-block" id="block-0" onclick="handleItemClick(0)">
-      <div class="check-item">
-        <div class="item-icon" style="background:#FFF0EB;"><svg width="24" height="24" viewBox="0 0 26 26" fill="none"><rect x="7" y="4" width="10" height="14" rx="2" fill="#D32F2F"/><rect x="9" y="2" width="6" height="3" rx="1" fill="#9A1B1B"/><circle cx="12" cy="9.5" r="2.5" fill="#FFF"/></svg></div>
-        <div class="item-text"><span class="item-main">소화설비</span><span class="item-sub">소화기 및 자동확산소화기 점검</span></div>
-        <div class="item-check"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.5L5 9L9.5 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      </div>
-      <div class="guide-panel" id="guide-0"><div class="guide-inner"><div class="illust-wrap"><img src="1.jpg" alt="소화설비" onclick="event.stopPropagation(); openImgModal(this.src)"></div></div></div>
-    </div>
-
-    <div class="check-block" id="block-1" onclick="handleItemClick(1)">
-      <div class="check-item">
-        <div class="item-icon" style="background:#EBF3FA;"><svg width="24" height="24" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="10" r="6" fill="#185FA5"/><circle cx="13" cy="10" r="1.8" fill="white"/></svg></div>
-        <div class="item-text"><span class="item-main">경보설비</span><span class="item-sub">자동화재탐지설비 및 가스누설경보기</span></div>
-        <div class="item-check"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.5L5 9L9.5 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      </div>
-      <div class="guide-panel" id="guide-1"><div class="guide-inner"><div class="illust-wrap"><img src="2.jpg" alt="경보설비" onclick="event.stopPropagation(); openImgModal(this.src)"></div></div></div>
-    </div>
-
-    <div class="check-block" id="block-2" onclick="handleItemClick(2)">
-      <div class="check-item">
-        <div class="item-icon" style="background:#FAF1E1;"><svg width="24" height="24" viewBox="0 0 26 26" fill="none"><rect x="2" y="7" width="22" height="15" rx="2.5" fill="#BA7517" opacity="0.2"/><path d="M7 14.5L10.5 18L19 11" stroke="#854F0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="item-text"><span class="item-main">피난설비</span><span class="item-sub">완강기 및 피난구용 내림식 사다리</span></div>
-        <div class="item-check"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.5L5 9L9.5 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      </div>
-      <div class="guide-panel" id="guide-2"><div class="guide-inner"><div class="illust-wrap"><img src="3.jpg" alt="피난설비" onclick="event.stopPropagation(); openImgModal(this.src)"></div></div></div>
-    </div>
-
-    <div class="check-block" id="block-3" onclick="handleItemClick(3)">
-      <div class="check-item">
-        <div class="item-icon" style="background:#F0F6E8;"><svg width="24" height="24" viewBox="0 0 26 26" fill="none"><rect x="3" y="13" width="20" height="11" rx="2" fill="#3B6D11"/><path d="M7 13L7 10Q13 4 19 10L19 13" fill="none" stroke="#639922" stroke-width="1.8"/></svg></div>
-        <div class="item-text"><span class="item-main">기타설비</span><span class="item-sub">대피공간, 경량칸막이 및 소화장치</span></div>
-        <div class="item-check"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.5L5 9L9.5 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      </div>
-      <div class="guide-panel" id="guide-3">
-        <div class="guide-inner">
-          <div class="illust-wrap">
-            <img src="4-1.jpg" alt="기타설비 1" style="margin-bottom:12px;" onclick="event.stopPropagation(); openImgModal(this.src)">
-            <img src="4-2.jpg" alt="기타설비 2" onclick="event.stopPropagation(); openImgModal(this.src)">
+    <!-- 소화설비 (★ 클릭 및 스와이프 슬라이더 적용) -->
+    <div class="card fade-up">
+      <div class="slider-wrap">
+        <div class="swipe-hint">화살표를 눌러 넘겨보세요</div>
+        
+        <!-- 좌우 화살표 버튼 -->
+        <button class="nav-btn prev-btn" onclick="moveSlide(this, -1)">❮</button>
+        
+        <div class="slider" onscroll="updateDots(this)">
+          <div class="slide" onclick="openImgModal('1-1.jpg')">
+            <img src="1-1.jpg" alt="소화설비 1">
+          </div>
+          <div class="slide" onclick="openImgModal('1-2.jpg')">
+            <img src="1-2.jpg" alt="소화설비 2">
           </div>
         </div>
+
+        <button class="nav-btn next-btn" onclick="moveSlide(this, 1)">❯</button>
+
+        <!-- 하단 도트(점) -->
+        <div class="slider-dots">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+      
+      <div class="card-body">
+        <h3 class="card-title">소화설비</h3>
+        <p class="card-desc">초기 진화를 돕는 소중한 설비들입니다. 우리 집에 설치된 설비들의 상태를 확인해 주세요.</p>
+        <div class="item-tags">
+          <span class="tag">소화기</span>
+          <span class="tag">자동확산소화기</span>
+          <span class="tag">주거용 주방자동소화장치</span>
+          <span class="tag">스프링클러</span>
+        </div>
+        <button class="check-btn" onclick="toggleCheck(this, 0)">[ ✓ 우리 집 점검 완료 ]</button>
       </div>
     </div>
+
+    <!-- 경보설비 -->
+    <div class="card fade-up">
+      <div class="card-img-wrap" onclick="openImgModal('2.jpg')">
+        <img src="2.jpg" alt="경보설비" class="card-img">
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">경보설비</h3>
+        <p class="card-desc">위험을 가장 먼저 알리는 경보기입니다. 천장이나 벽에 잘 부착되어 있는지 확인해 주세요.</p>
+        <div class="item-tags">
+          <span class="tag">자동화재탐지설비</span>
+          <span class="tag">가스누설경보기</span>
+        </div>
+        <button class="check-btn" onclick="toggleCheck(this, 1)">[ ✓ 우리 집 점검 완료 ]</button>
+      </div>
+    </div>
+
+    <!-- 피난설비 -->
+    <div class="card fade-up">
+      <div class="card-img-wrap" onclick="openImgModal('3.jpg')">
+        <img src="3.jpg" alt="피난설비" class="card-img">
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">피난설비</h3>
+        <p class="card-desc">생명을 지켜주는 피난 설비입니다. 위급 시 바로 쓸 수 있도록 가족과 함께 위치를 눈에 익혀두세요.</p>
+        <div class="item-tags">
+          <span class="tag">완강기</span>
+          <span class="tag">피난구용 내림식 사다리</span>
+        </div>
+        <button class="check-btn" onclick="toggleCheck(this, 2)">[ ✓ 우리 집 점검 완료 ]</button>
+      </div>
+    </div>
+
+    <!-- 기타설비 -->
+    <div class="card fade-up">
+      <div class="card-img-wrap" onclick="openImgModal('4.jpg')">
+        <img src="4.jpg" alt="기타설비" class="card-img">
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">기타설비</h3>
+        <p class="card-desc">안전을 위한 마지막 통로입니다. 대피를 방해하는 물건이 쌓여있지 않은지 꼭 점검해 주세요.</p>
+        <div class="item-tags">
+          <span class="tag">대피공간</span>
+          <span class="tag">경량칸막이</span>
+        </div>
+        <button class="check-btn" onclick="toggleCheck(this, 3)">[ ✓ 우리 집 점검 완료 ]</button>
+      </div>
+    </div>
+
   </div>
 
-  <div class="footer">
-    <div class="footer-logo">남원소방서</div>
-    <div class="footer-eng">Namwon Fire Station</div>
-    <p class="footer-note">공동주택 세대점검 문화 정착을 위해<br>시민 여러분의 적극적인 참여를 부탁드립니다.</p>
+  <!-- 하단 푸터 -->
+  <div class="footer fade-up">
+    <div class="footer-icon">❧</div>
+    <p class="footer-text">안전한 일상을 위해 늘 시민의 곁에 있겠습니다.</p>
+    <div class="footer-logo">남원소방서 드림</div>
   </div>
 </div>
 
+<!-- 음악 버튼 -->
 <button class="bgm-toggle" id="bgmBtn" onclick="toggleMusic()">
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <path d="M9 18V5l12-2v13"></path>
@@ -301,72 +366,92 @@
   <span id="bgmText">음악 켜기</span>
 </button>
 
-<div id="completeLayer" class="complete-layer" onclick="closeCompleteLayer()">
-  <div class="success-card" onclick="event.stopPropagation()">
-    <div class="success-header">
-      <div class="success-icon-wrap">
-        <svg class="animated-check" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path class="animated-check-path" d="M5 13L9 17L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <h2 class="success-title">점검 방법 학습 완료</h2>
-    </div>
-    <div class="success-body">
-      <p class="success-text">우리 가족의 안전을 지키는<br>소중한 첫걸음을 마치셨습니다.<br>
-        <span class="highlight-badge">🚨 오늘 꼭 직접 확인해보세요!</span>
-      </p>
-      <button class="close-btn" onclick="closeCompleteLayer()">확인</button>
-    </div>
+<!-- 완료 모달 -->
+<div id="completeModal" class="modal-overlay" onclick="closeModal()">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <div class="modal-icon">✓</div>
+    <h2 class="modal-title">점검을 마쳐주셔서<br>감사합니다.</h2>
+    <p class="modal-text">가족의 안전을 위한 뜻깊은 확인을 모두 마치셨습니다.<br><br>오늘 저녁, 가족들과 함께 우리 집의 안전 설비 위치를 다시 한번 꼭 이야기 나누어 보세요.</p>
+    <button class="close-btn" onclick="closeModal()">확인했습니다</button>
   </div>
 </div>
 
+<!-- 이미지 줌 모달 -->
 <div id="imgZoomModal" class="image-zoom-modal" onclick="closeImgModal()">
   <span class="close-zoom">&times;</span>
   <img class="zoom-modal-content" id="zoomedImg" onclick="event.stopPropagation();">
 </div>
 
 <script>
-  const total = 4;
-  const states = [false, false, false, false];
-  let layerTimeout; 
-  let hasSeenCompleteLayer = false;
+  // --- 스크롤 시 페이드업 애니메이션 ---
+  document.addEventListener("DOMContentLoaded", () => {
+    const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target); 
+        }
+      });
+    }, observerOptions);
 
-  function handleItemClick(i) {
-    states[i] = !states[i];
-    document.getElementById('block-' + i).classList.toggle('done', states[i]);
-    document.getElementById('guide-' + i).classList.toggle('open', states[i]);
-    
-    const count = states.filter(Boolean).length;
-    updateProgress(count);
+    const fadeElements = document.querySelectorAll('.fade-up');
+    fadeElements.forEach(el => observer.observe(el));
+  });
+
+  // --- 슬라이더 화살표 클릭 이동 스크립트 ---
+  function moveSlide(btn, direction) {
+    const wrap = btn.closest('.slider-wrap');
+    const slider = wrap.querySelector('.slider');
+    const slideWidth = slider.clientWidth;
+    // 클릭한 방향(-1 은 왼쪽, 1 은 오른쪽)으로 슬라이드 너비만큼 이동
+    slider.scrollBy({ left: direction * slideWidth, behavior: 'smooth' });
   }
 
-  function updateProgress(count) {
-    document.getElementById('prog-fill').style.width = (count / total * 100) + '%';
-    document.getElementById('prog-count').textContent = count + ' / ' + total;
+  // --- 슬라이더 도트(점) 동기화 스크립트 ---
+  function updateDots(slider) {
+    const slideWidth = slider.clientWidth;
+    const scrollLeft = slider.scrollLeft;
+    // 현재 스크롤 위치를 기준으로 몇 번째 사진인지 계산
+    const index = Math.round(scrollLeft / slideWidth);
     
-    clearTimeout(layerTimeout);
-
-    if (count === total && !hasSeenCompleteLayer) {
-      hasSeenCompleteLayer = true; 
-      layerTimeout = setTimeout(showCompleteLayer, 400); 
-    } 
+    const dotsContainer = slider.parentElement.querySelector('.slider-dots');
+    const dots = dotsContainer.querySelectorAll('.dot');
+    dots.forEach((dot, i) => {
+      if (i === index) dot.classList.add('active');
+      else dot.classList.remove('active');
+    });
   }
 
-  // --- 레이어 팝업 기능 ---
-  function showCompleteLayer() {
-    const layer = document.getElementById('completeLayer');
-    layer.classList.add('show');
+  // --- 체크리스트 상태 관리 ---
+  let checkedStates = [false, false, false, false];
+  let hasSeenCompleteModal = false;
+
+  function toggleCheck(btn, index) {
+    checkedStates[index] = !checkedStates[index];
+    
+    if (checkedStates[index]) {
+      btn.classList.add('checked');
+      btn.textContent = '네, 확인했습니다';
+    } else {
+      btn.classList.remove('checked');
+      btn.textContent = '[ ✓ 우리 집 점검 완료 ]';
+    }
+
+    const allChecked = checkedStates.every(state => state === true);
+    if (allChecked && !hasSeenCompleteModal) {
+      hasSeenCompleteModal = true;
+      setTimeout(showModal, 400);
+    }
+  }
+
+  // --- 모달 기능 ---
+  function showModal() {
+    document.getElementById('completeModal').classList.add('show');
     document.body.style.overflow = 'hidden';
-
-    const path = layer.querySelector('.animated-check-path');
-    path.style.animation = 'none';
-    path.offsetHeight; /* 리플로우 */
-    path.style.animation = 'drawCheckLayer 0.6s cubic-bezier(0.65, 0, 0.45, 1) 0.2s forwards';
   }
-
-  function closeCompleteLayer() {
-    const layer = document.getElementById('completeLayer');
-    layer.classList.remove('show');
+  function closeModal() {
+    document.getElementById('completeModal').classList.remove('show');
     document.body.style.overflow = '';
   }
 
@@ -374,28 +459,23 @@
   function openImgModal(src) {
     const modal = document.getElementById('imgZoomModal');
     const zoomedImg = document.getElementById('zoomedImg');
-    
     zoomedImg.src = src;
     modal.classList.add('show');
     document.body.style.overflow = 'hidden';
   }
-
   function closeImgModal() {
-    const modal = document.getElementById('imgZoomModal');
-    modal.classList.remove('show');
-    
-    if (!document.getElementById('completeLayer').classList.contains('show')) {
+    document.getElementById('imgZoomModal').classList.remove('show');
+    if (!document.getElementById('completeModal').classList.contains('show')) {
       document.body.style.overflow = '';
     }
   }
 
-  // --- 자동 재생 및 음악 제어 스크립트 ---
+  // --- 배경음악 자동재생 및 제어 ---
   let isPlaying = false;
   const bgm = document.getElementById('bgm');
   const bgmBtn = document.getElementById('bgmBtn');
   const bgmText = document.getElementById('bgmText');
 
-  // 버튼 UI 상태 변경 함수
   function setMusicPlayingState(playing) {
     if (playing) {
       bgmBtn.classList.add('playing');
@@ -408,7 +488,6 @@
     }
   }
 
-  // 음악 버튼 클릭 시 실행
   function toggleMusic() {
     if (isPlaying) {
       bgm.pause();
@@ -418,37 +497,32 @@
         setMusicPlayingState(true);
       }).catch((e) => {
         console.log("재생 실패:", e);
-        alert("브라우저 정책으로 인해 소리를 재생할 수 없습니다.");
       });
     }
   }
 
-  // 페이지 로드 완료 시 자동 재생 시도 및 첫 터치  fallback
   window.addEventListener('DOMContentLoaded', () => {
     const playPromise = bgm.play();
     
     if (playPromise !== undefined) {
       playPromise.then(() => {
-        // 브라우저가 자동 재생을 허용한 경우
-        setMusicPlayingState(true);
+        setMusicPlayingState(true); 
       }).catch(error => {
-        // 모바일 환경 등에서 자동 재생이 차단된 경우
-        console.log("자동 재생이 차단되었습니다. 사용자의 첫 터치 시 재생합니다.");
-        
         const startMusicOnInteract = () => {
           if (!isPlaying) {
             bgm.play().then(() => {
               setMusicPlayingState(true);
-            }).catch(e => console.log(e));
+              ['click', 'touchstart'].forEach(evt => 
+                document.removeEventListener(evt, startMusicOnInteract)
+              );
+            }).catch(e => {
+              console.log("터치 대기 중...");
+            });
           }
-          // 재생 후 이벤트 리스너 제거
-          document.removeEventListener('click', startMusicOnInteract);
-          document.removeEventListener('touchstart', startMusicOnInteract);
         };
-
-        // 화면을 아무 곳이나 터치하면 음악 시작
-        document.addEventListener('click', startMusicOnInteract);
-        document.addEventListener('touchstart', startMusicOnInteract, {passive: true});
+        ['click', 'touchstart'].forEach(evt => 
+          document.addEventListener(evt, startMusicOnInteract, {passive: true})
+        );
       });
     }
   });
