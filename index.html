@@ -174,14 +174,8 @@
   }
   .check-stamp-icon { font-size: 14px; }
 
-  /* ★ 이미지 위 완료 오버레이 */
-  .card-checked-overlay {
-    position: absolute; inset: 0; z-index: 10;
-    background: rgba(26, 122, 74, 0.08);
-    opacity: 0; transition: opacity 0.4s ease;
-    pointer-events: none;
-  }
-  .card.card-checked .card-checked-overlay { opacity: 1; }
+  /* 오버레이 제거 */
+  .card-checked-overlay { display: none; }
 
   /* 슬라이더 */
   .slider-wrap {
