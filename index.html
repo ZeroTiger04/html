@@ -301,7 +301,7 @@
   }
   .check-btn.checked.pulse-anim { animation: btnPulse 0.6s ease-out; }
   
-  /* ★ 카드 하단 완료 안내 텍스트 수정 */
+  /* ★ 카드 하단 완료 안내 텍스트 */
   .check-done-text {
     margin-top: 14px; font-size: 13px; color: var(--check-green);
     font-weight: 500; letter-spacing: 0.3px; line-height: 1.5;
@@ -311,7 +311,7 @@
   }
   .check-done-text.visible { opacity: 1; transform: translateY(0); }
 
-  /* ★ 다운로드 버튼 추가 스타일 */
+  /* ★ 다운로드 버튼 */
   .download-btn {
     display: flex; align-items: center; justify-content: center; gap: 8px;
     width: 100%; padding: 16px; border-radius: 20px; font-size: 15px; font-weight: 600;
@@ -384,11 +384,66 @@
   .zoom-modal-content { max-width: 95%; max-height: 90%; border-radius: 12px; transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); object-fit: contain; }
   .image-zoom-modal.show .zoom-modal-content { transform: scale(1); }
   .close-zoom { position: absolute; top: 20px; right: 24px; color: white; font-size: 44px; font-weight: 300; cursor: pointer; z-index: 10001; }
+  
+  /* ★ 모달 내 확대 안내 텍스트 */
+  .zoom-hint-text {
+    position: absolute; top: 40px; left: 50%; transform: translateX(-50%);
+    color: white; font-size: 15px; font-weight: 500; background: rgba(0,0,0,0.7); 
+    padding: 10px 20px; border-radius: 30px; pointer-events: none; opacity: 0;
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    transition: opacity 0.4s ease; z-index: 10002; width: max-content;
+  }
+  .image-zoom-modal.show .zoom-hint-text { animation: fadeHint 3s ease forwards 0.3s; }
+  @keyframes fadeHint {
+    0% { opacity: 0; transform: translate(-50%, 10px); }
+    15% { opacity: 1; transform: translate(-50%, 0); }
+    85% { opacity: 1; transform: translate(-50%, 0); }
+    100% { opacity: 0; transform: translate(-50%, -10px); }
+  }
 
-  /* --- 배경음악 버튼 --- */
-  .bgm-toggle { position: fixed; bottom: 24px; right: 24px; z-index: 9000; height: 50px; border-radius: 25px; padding: 0 20px; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.5); color: var(--text-gray); display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); cursor: pointer; transition: all 0.3s ease; font-family: 'Noto Sans KR', sans-serif; font-weight: 500; font-size: 14px; }
+  /* --- 하단 고정 제어 버튼 (음악 & 글자확대) --- */
+  .bgm-toggle { position: fixed; bottom: 24px; right: 24px; z-index: 9000; height: 50px; border-radius: 25px; padding: 0 20px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(0,0,0,0.1); color: var(--text-gray); display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); cursor: pointer; transition: all 0.3s ease; font-family: 'Noto Sans KR', sans-serif; font-weight: 500; font-size: 14px; }
   .bgm-toggle svg { width: 18px; height: 18px; fill: currentColor; }
   .bgm-toggle.playing { color: var(--point-red); border-color: rgba(132, 35, 35, 0.2); }
+
+  /* ★ 어르신용 글자 확대 버튼 */
+  .zoom-toggle { position: fixed; bottom: 24px; left: 24px; z-index: 9000; height: 50px; border-radius: 25px; padding: 0 20px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(0,0,0,0.1); color: var(--text-dark); display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); cursor: pointer; transition: all 0.3s ease; font-family: 'Noto Sans KR', sans-serif; font-weight: 600; font-size: 15px; }
+  .zoom-toggle .zoom-icon { font-size: 18px; font-weight: 700; color: var(--point-red); }
+  .zoom-toggle.active { background: var(--text-dark); color: white; border-color: var(--text-dark); }
+  .zoom-toggle.active .zoom-icon { color: white; }
+
+  /* ★ 어르신용 글자 크게 보기 모드 (더욱 시원시원하게 대폭 확대) */
+  body.large-text .hero-badge { font-size: 16px; padding: 10px 24px; }
+  body.large-text .hero-title { font-size: 42px; line-height: 1.35; }
+  body.large-text .hero-sub { font-size: 20px; line-height: 1.6; }
+  body.large-text .intro-title { font-size: 26px; margin-bottom: 28px; }
+  body.large-text .intro-text { font-size: 20px; line-height: 1.9; font-weight: 400; }
+  
+  body.large-text .progress-text { font-size: 20px; margin-bottom: 18px; }
+  body.large-text .progress-count { font-size: 18px; }
+  body.large-text .progress-count strong { font-size: 26px; }
+  
+  body.large-text .card-title { font-size: 30px; margin-bottom: 18px; }
+  body.large-text .card-desc { font-size: 20px; line-height: 1.7; margin-bottom: 28px; }
+  body.large-text .tag { font-size: 16px; padding: 10px 18px; }
+  
+  body.large-text .check-btn { font-size: 22px; padding: 22px; border-width: 3px; }
+  body.large-text .check-btn.checked { font-size: 23px; padding: 24px; }
+  body.large-text .check-done-text { font-size: 16px; line-height: 1.6; margin-top: 18px; }
+  
+  body.large-text .download-btn { font-size: 18px; padding: 20px; margin-bottom: 16px; }
+  
+  body.large-text .share-title { font-size: 18px; margin-bottom: 20px; }
+  body.large-text .share-btn { font-size: 18px; padding: 18px 10px; }
+  body.large-text .share-icon { font-size: 22px; }
+  
+  body.large-text .footer-text { font-size: 18px; }
+  body.large-text .footer-notice { font-size: 17px; }
+  body.large-text .footer-logo { font-size: 17px; }
+  
+  body.large-text .modal-title { font-size: 30px; line-height: 1.5; }
+  body.large-text .modal-text { font-size: 19px; line-height: 1.7; }
+  body.large-text .close-btn { font-size: 20px; padding: 20px; }
 </style>
 </head>
 <body>
@@ -598,7 +653,7 @@
       </div>
     </div>
     
-    <!-- ★ 5. 소방시설 외관점검표 다운로드 영역 -->
+    <!-- 5. 소방시설 외관점검표 다운로드 영역 -->
     <div class="card fade-up" id="card-download">
       <div class="card-img-wrap" onclick="openImgModal('checklist.jpg')">
         <img class="card-img" src="checklist.jpg" alt="소방시설 외관점검표 미리보기">
@@ -607,13 +662,11 @@
         <h3 class="card-title">소방시설 외관점검표<br><span style="font-size: 16px; font-weight: 500; color: var(--text-gray); letter-spacing: 0;">(세대점검용)</span></h3>
         <p class="card-desc">세대 점검 시 활용할 수 있는 공식 점검표 양식입니다. 아래 버튼을 눌러 원하시는 양식을 다운로드해 주세요.</p>
         
-        <!-- HWP 다운로드 버튼 -->
         <a href="checklist.hwp" download="소방시설외관점검표(세대점검용).hwp" class="download-btn download-btn-primary">
           <span class="btn-icon">📥</span>
           <span class="btn-text">양식 다운로드 (HWP)</span>
         </a>
         
-        <!-- PDF 다운로드 버튼 -->
         <a href="checklist.pdf" download="소방시설외관점검표(세대점검용).pdf" class="download-btn download-btn-secondary">
           <span class="btn-icon">📄</span>
           <span class="btn-text">양식 다운로드 (PDF)</span>
@@ -648,6 +701,12 @@
   </div>
 </div>
 
+<!-- ★ 글자 확대 버튼 -->
+<button class="zoom-toggle" id="zoomBtn" onclick="toggleTextSize()">
+  <span class="zoom-icon" id="zoomIcon">A+</span>
+  <span id="zoomText">글자 크게</span>
+</button>
+
 <!-- 음악 버튼 -->
 <button class="bgm-toggle" id="bgmBtn" onclick="toggleMusic()">
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -658,7 +717,7 @@
   <span id="bgmText">음악 켜기</span>
 </button>
 
-<!-- ★ 수정된 완료 모달 -->
+<!-- 완료 모달 -->
 <div id="completeModal" class="modal-overlay" onclick="closeModal()">
   <div class="modal-card" onclick="event.stopPropagation()">
     <div class="modal-icon">✓</div>
@@ -671,6 +730,7 @@
 <!-- 이미지 줌 모달 -->
 <div id="imgZoomModal" class="image-zoom-modal" onclick="closeImgModal()">
   <span class="close-zoom">&times;</span>
+  <div class="zoom-hint-text">✌️ 두 손가락으로 사진을 늘려보세요</div>
   <img class="zoom-modal-content" id="zoomedImg" onclick="event.stopPropagation();">
 </div>
 
@@ -694,7 +754,6 @@
     const wrap = btn.closest('.slider-wrap');
     const slider = wrap.querySelector('.slider');
     slider.scrollBy({ left: direction * slider.clientWidth, behavior: 'smooth' });
-    // 화살표 버튼으로 넘길 때도 힌트 숨김
     const hint = wrap.querySelector('.swipe-hint');
     if (hint) hint.classList.add('hidden');
   }
@@ -703,7 +762,6 @@
     const dots = slider.parentElement.querySelector('.slider-dots').querySelectorAll('.dot');
     dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
   }
-  // 슬라이드 처음 넘기면 힌트 숨김
   function hideHint(slider) {
     if (slider.scrollLeft > 10) {
       const hint = slider.parentElement.querySelector('.swipe-hint');
@@ -725,22 +783,13 @@
     const text = btn.querySelector('.btn-text');
 
     if (isChecked) {
-      // 버튼 상태 변경
       btn.classList.add('checked');
       icon.textContent = '✓';
       text.textContent = '확인 완료!';
-
-      // 펄스 애니메이션
       btn.classList.add('pulse-anim');
       setTimeout(() => btn.classList.remove('pulse-anim'), 700);
-
-      // 카드 초록 테두리
       card.classList.add('card-checked');
-
-      // 상단 스탬프 표시
       stamp.classList.add('visible');
-
-      // 하단 완료 텍스트
       doneText.classList.add('visible');
     } else {
       btn.classList.remove('checked');
@@ -751,7 +800,6 @@
       doneText.classList.remove('visible');
     }
 
-    // 진행도 바 업데이트
     const checkedCount = checkedStates.filter(Boolean).length;
     document.getElementById('progress-text-count').textContent = checkedCount;
     document.getElementById('progress-fill').style.width = (checkedCount / 4 * 100) + '%';
@@ -759,7 +807,6 @@
     const progressContainer = document.getElementById('progress-container');
     progressContainer.classList.toggle('all-done', checkedCount === 4);
 
-    // 모두 체크 시 완료 모달
     if (checkedCount === 4 && !hasSeenCompleteModal) {
       hasSeenCompleteModal = true;
       setTimeout(showModal, 500); 
@@ -779,6 +826,12 @@
   // 이미지 줌
   function openImgModal(src) {
     const modal = document.getElementById('imgZoomModal');
+    
+    const hint = modal.querySelector('.zoom-hint-text');
+    hint.style.animation = 'none';
+    hint.offsetHeight; 
+    hint.style.animation = null;
+
     document.getElementById('zoomedImg').src = src;
     modal.classList.add('show');
     document.body.style.overflow = 'hidden';
@@ -787,6 +840,23 @@
     document.getElementById('imgZoomModal').classList.remove('show');
     if (!document.getElementById('completeModal').classList.contains('show')) {
       document.body.style.overflow = '';
+    }
+  }
+
+  // ★ 글자 크기 토글 함수
+  let isLargeText = false;
+  function toggleTextSize() {
+    isLargeText = !isLargeText;
+    if (isLargeText) {
+      document.body.classList.add('large-text');
+      document.getElementById('zoomText').textContent = '원래대로';
+      document.getElementById('zoomIcon').textContent = 'A-';
+      document.getElementById('zoomBtn').classList.add('active');
+    } else {
+      document.body.classList.remove('large-text');
+      document.getElementById('zoomText').textContent = '글자 크게';
+      document.getElementById('zoomIcon').textContent = 'A+';
+      document.getElementById('zoomBtn').classList.remove('active');
     }
   }
 
@@ -800,7 +870,6 @@
         url: url
       }).catch(() => {});
     } else {
-      // 공유 API 미지원 시 링크 복사로 대체
       copyLink();
     }
   }
@@ -818,7 +887,6 @@
         btn.innerHTML = '<span class="share-icon">🔗</span> 링크 복사';
       }, 2000);
     }).catch(() => {
-      // clipboard API 실패 시 구형 방식
       const el = document.createElement('textarea');
       el.value = url; document.body.appendChild(el);
       el.select(); document.execCommand('copy'); document.body.removeChild(el);
