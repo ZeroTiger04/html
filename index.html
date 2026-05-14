@@ -362,10 +362,13 @@
   .footer { padding: 10px 20px 60px; text-align: center; }
   .footer-divider { width: 40px; height: 2px; background: var(--point-red); opacity: 0.25; margin: 0 auto 28px; border-radius: 2px; }
   .footer-text { font-size: 15px; color: var(--text-gray); line-height: 1.9; font-weight: 300; margin-bottom: 24px; font-family: 'Noto Serif KR', serif; }
-  .footer-notice { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--point-red); margin-bottom: 32px; }
+  .footer-notice { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--point-red); margin-bottom: 24px; }
   .footer-notice-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--point-red); opacity: 0.5; animation: dotPulse 2s infinite; }
   @keyframes dotPulse { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.4); } }
-  .footer-logo { font-family:'Noto Serif KR',serif; font-size:15px; font-weight:600; color: var(--text-gray); letter-spacing: 3px; opacity: 0.7; }
+  .footer-logo { font-family:'Noto Serif KR',serif; font-size:15px; font-weight:600; color: var(--text-gray); letter-spacing: 3px; opacity: 0.7; margin-bottom: 4px; }
+  
+  /* ★ 저작권 표시 */
+  .footer-copyright { font-size: 11px; color: var(--text-gray); opacity: 0.6; font-family: 'Noto Sans KR', sans-serif; letter-spacing: 0.5px; margin-top: 12px; }
 
   /* --- 점검 완료 모달 --- */
   .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.65); z-index: 10000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.4s ease; backdrop-filter: blur(5px); }
@@ -440,6 +443,7 @@
   body.large-text .footer-text { font-size: 18px; }
   body.large-text .footer-notice { font-size: 17px; }
   body.large-text .footer-logo { font-size: 17px; }
+  body.large-text .footer-copyright { font-size: 14px; margin-top: 16px; }
   
   body.large-text .modal-title { font-size: 30px; line-height: 1.5; }
   body.large-text .modal-text { font-size: 19px; line-height: 1.7; }
@@ -469,7 +473,7 @@
          <path d="M30 3 L23 10 L30 17 L37 10 Z" fill="currentColor"/>
       </svg>
 
-      <h1 class="hero-title">공동주택<br>세대점검 초대</h1>
+      <h1 class="hero-title">공동주택<br>세대점검 초대장</h1>
       <p class="hero-sub">가족의 안전을 지키는<br>뜻깊은 동행에 함께해 주세요</p>
       <div class="hero-line"></div>
     </div>
@@ -698,6 +702,8 @@
       우리 집 세대 점검은 2년마다!
     </div>
     <div class="footer-logo">남원소방서 드림</div>
+    <!-- ★ 하단 저작권 표시 추가 -->
+    <div class="footer-copyright">Copyright © 2026 남원소방서. All rights reserved.</div>
   </div>
 </div>
 
@@ -899,10 +905,10 @@
     });
   }
 
-  // 배경음악 (볼륨 50% 적용)
+  // 배경음악 (볼륨 30% 적용)
   let isPlaying = false;
   const bgm = document.getElementById('bgm');
-  bgm.volume = 0.5; // ★ 볼륨을 50%로 고정
+  bgm.volume = 0.3; // ★ 볼륨을 30%로 고정
 
   function setMusicPlayingState(playing) {
     document.getElementById('bgmBtn').classList.toggle('playing', playing);
