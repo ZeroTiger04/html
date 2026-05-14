@@ -300,11 +300,14 @@
     100% { box-shadow: 0 8px 25px rgba(26, 122, 74, 0.35); }
   }
   .check-btn.checked.pulse-anim { animation: btnPulse 0.6s ease-out; }
+  
+  /* ★ 카드 하단 완료 안내 텍스트 수정 */
   .check-done-text {
     margin-top: 14px; font-size: 13px; color: var(--check-green);
-    font-weight: 500; letter-spacing: 0.3px; opacity: 0; transform: translateY(8px);
+    font-weight: 500; letter-spacing: 0.3px; line-height: 1.5;
+    opacity: 0; transform: translateY(8px);
     transition: opacity 0.4s ease 0.2s, transform 0.4s ease 0.2s;
-    display: flex; align-items: center; justify-content: center; gap: 5px;
+    text-align: center; word-break: keep-all; display: block;
   }
   .check-done-text.visible { opacity: 1; transform: translateY(0); }
 
@@ -485,7 +488,8 @@
           <span class="btn-icon">☐</span>
           <span class="btn-text">우리 집 점검 완료</span>
         </button>
-        <div class="check-done-text" id="done-text-0">✔ 소화설비 확인을 완료했습니다</div>
+        <!-- ★ 문구 변경 부분 -->
+        <div class="check-done-text" id="done-text-0">✔ 소화설비 확인 완료!<br>작성하신 소방시설외관점검표를 관리사무실에 제출해 주세요.</div>
       </div>
     </div>
 
@@ -522,11 +526,12 @@
           <span class="btn-icon">☐</span>
           <span class="btn-text">우리 집 점검 완료</span>
         </button>
-        <div class="check-done-text" id="done-text-1">✔ 경보설비 확인을 완료했습니다</div>
+        <!-- ★ 문구 변경 부분 -->
+        <div class="check-done-text" id="done-text-1">✔ 경보설비 확인 완료!<br>작성하신 소방시설외관점검표를 관리사무실에 제출해 주세요.</div>
       </div>
     </div>
 
-    <!-- 3. 피난설비 (2장) -->
+    <!-- 3. 피난설비 (3장으로 수정됨) -->
     <div class="card fade-up" id="card-2">
       <div class="check-stamp" id="stamp-2">
         <span class="check-stamp-icon">✅</span> 점검 완료
@@ -538,10 +543,11 @@
         <div class="slider" onscroll="updateDots(this); hideHint(this)">
           <div class="slide" onclick="openImgModal('3-1.jpg')"><img src="3-1.jpg" alt="피난설비 1"></div>
           <div class="slide" onclick="openImgModal('3-2.jpg')"><img src="3-2.jpg" alt="피난설비 2"></div>
+          <div class="slide" onclick="openImgModal('3-3.jpg')"><img src="3-3.jpg" alt="피난설비 3"></div>
         </div>
         <button class="nav-btn next-btn" onclick="moveSlide(this, 1)">❯</button>
         <div class="slider-dots">
-          <span class="dot active"></span><span class="dot"></span>
+          <span class="dot active"></span><span class="dot"></span><span class="dot"></span>
         </div>
       </div>
       <div class="card-body">
@@ -555,11 +561,12 @@
           <span class="btn-icon">☐</span>
           <span class="btn-text">우리 집 점검 완료</span>
         </button>
-        <div class="check-done-text" id="done-text-2">✔ 피난설비 확인을 완료했습니다</div>
+        <!-- ★ 문구 변경 부분 -->
+        <div class="check-done-text" id="done-text-2">✔ 피난설비 확인 완료!<br>작성하신 소방시설외관점검표를 관리사무실에 제출해 주세요.</div>
       </div>
     </div>
 
-    <!-- 4. 기타설비 (3장) -->
+    <!-- 4. 기타설비 (4장으로 수정됨) -->
     <div class="card fade-up" id="card-3">
       <div class="check-stamp" id="stamp-3">
         <span class="check-stamp-icon">✅</span> 점검 완료
@@ -572,10 +579,11 @@
           <div class="slide" onclick="openImgModal('4-1.jpg')"><img src="4-1.jpg" alt="기타설비 1"></div>
           <div class="slide" onclick="openImgModal('4-2.jpg')"><img src="4-2.jpg" alt="기타설비 2"></div>
           <div class="slide" onclick="openImgModal('4-3.jpg')"><img src="4-3.jpg" alt="기타설비 3"></div>
+          <div class="slide" onclick="openImgModal('4-4.jpg')"><img src="4-4.jpg" alt="기타설비 4"></div>
         </div>
         <button class="nav-btn next-btn" onclick="moveSlide(this, 1)">❯</button>
         <div class="slider-dots">
-          <span class="dot active"></span><span class="dot"></span><span class="dot"></span>
+          <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
         </div>
       </div>
       <div class="card-body">
@@ -589,11 +597,12 @@
           <span class="btn-icon">☐</span>
           <span class="btn-text">우리 집 점검 완료</span>
         </button>
-        <div class="check-done-text" id="done-text-3">✔ 기타설비 확인을 완료했습니다</div>
+        <!-- ★ 문구 변경 부분 -->
+        <div class="check-done-text" id="done-text-3">✔ 기타설비 확인 완료!<br>작성하신 소방시설외관점검표를 관리사무실에 제출해 주세요.</div>
       </div>
     </div>
     
-    <!-- ★ 5. 소방시설 외관점검표 다운로드 영역 추가 -->
+    <!-- ★ 5. 소방시설 외관점검표 다운로드 영역 -->
     <div class="card fade-up" id="card-download">
       <!-- 사진 파일명은 필요에 따라 'checklist.jpg' 등으로 변경해 주세요 -->
       <div class="card-img-wrap" onclick="openImgModal('checklist.jpg')">
