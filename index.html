@@ -899,9 +899,10 @@
     });
   }
 
-  // 배경음악
+  // 배경음악 (볼륨 50% 적용)
   let isPlaying = false;
   const bgm = document.getElementById('bgm');
+  bgm.volume = 0.5; // ★ 볼륨을 50%로 고정
 
   function setMusicPlayingState(playing) {
     document.getElementById('bgmBtn').classList.toggle('playing', playing);
